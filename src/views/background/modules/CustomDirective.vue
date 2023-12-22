@@ -9,7 +9,14 @@
     <div class="input">
       <a-input v-focus />
     </div>
+
     <div v-circle></div>
+    <div v-circle.isFull></div>
+    <div v-circle:skyBlue.isFull></div>
+    <div v-circle:red.isFull="50"></div>
+    <div v-circle:purple="60"></div>
+    <div v-circle="70"></div>
+    <div v-circle:#ff9a9e.isFull="80"></div>
   </div>
 </template>
 
@@ -22,12 +29,14 @@
     }
   }
 
-  const vCircle = (el) => {
+  const vCircle = (el, binding) => {
     el.style.cssText = `
-      width: 100px;
-      height: 100px;
+      display: inline-block;
+      width: ${binding.value || 10}px;
+      height: ${binding.value || 10}px;
       border-radius: 50%;
-      background-color: skyBlue;
+      border: 1px solid ${binding.arg || 'black'};
+      background-color: ${binding.modifiers.isFull ? binding.arg || 'black' : 'transparent'};
     `
   }
 </script>
