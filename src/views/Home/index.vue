@@ -5,13 +5,26 @@
  * @Description: 描述
 -->
 <template>
-  <div class="home">
-    <div class="home-left"></div>
-    <div class="home-right"></div>
+  <div class="home animated" :class="{ animate__hinge: isHidden }">
+    <div class="home-text animated animate__jackInTheBox" @click="jumpBackgroud">vue3 测试 >></div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
+
+  const router = useRouter()
+
+  const isHidden = ref(false)
+
+  async function jumpBackgroud() {
+    isHidden.value = true
+    setTimeout(() => {
+      router.push('/background')
+    }, 2000)
+  }
+</script>
 
 <style scoped lang="less">
   .home {
@@ -20,20 +33,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 200px;
 
-    .home-left {
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
+    .home-text {
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    }
-
-    .home-right {
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #001f3f, #0088a9, #00c9a7, #92d5c6, #ebf5ee);
+      font-size: 100px;
+      font-weight: 800;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      cursor: pointer;
     }
   }
 </style>
