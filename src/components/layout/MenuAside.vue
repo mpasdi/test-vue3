@@ -1,3 +1,9 @@
+<!--
+ * @Author: lisongming
+ * @Date: 2023-12-22 14:41:35
+ * @LastEditors: lisongming
+ * @Description: 描述
+-->
 <template>
   <div class="menu-aside">
     <div
@@ -22,7 +28,6 @@
   // vue api
   const router = useRouter()
   const route = useRoute()
-  console.log('lsm----route', route)
   const props = defineProps({
     moduleName: String
   })

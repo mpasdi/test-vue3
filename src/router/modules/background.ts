@@ -21,9 +21,45 @@ export const Background: RouteRecordRaw[] = [
         name: 'Directive',
         component: () => import('@/views/background/modules/CustomDirective.vue'),
         meta: {
-          title: '自定义指定测试'
+          title: '自定义指令测试'
+        }
+      },
+      {
+        path: 'cssTest',
+        name: 'CssTest',
+        component: () => import('@/views/background/modules/CssTest.vue'),
+        meta: {
+          title: 'css测试'
+        }
+      },
+      {
+        path: 'componentTest',
+        name: 'ComponentTest',
+        component: () => import('@/views/background/modules/ComponentsTest.vue'),
+        meta: {
+          title: '组件测试'
+        }
+      },
+      {
+        path: 'vue3Test',
+        name: 'Vue3Test',
+        component: () => import('@/views/background/modules/Vue3Test.vue'),
+        meta: {
+          title: 'vu3测试'
         }
       }
     ]
   }
 ]
+
+/* 
+route 模板
+{
+  path: '',
+  name: '',
+  component: () => import(''),
+  meta: {
+    title: ''
+  }
+}
+ */

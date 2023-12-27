@@ -6,6 +6,7 @@
 -->
 <template>
   <div class="wrap">
+    <h1>自定义指令测试</h1>
     <div class="input">
       <a-input v-focus />
     </div>
