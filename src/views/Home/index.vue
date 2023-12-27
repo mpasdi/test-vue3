@@ -39,6 +39,7 @@
       font-size: 100px;
       font-weight: 800;
       background-clip: text;
+      -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       cursor: pointer;
     }
