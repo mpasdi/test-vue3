@@ -8,6 +8,7 @@
   <div class="background animated animate__zoomIn">
     <header class="header">
       <span>测试后台</span>
+      <span @click="jump">2023复习</span>
     </header>
 
     <main class="main">
@@ -25,8 +26,13 @@
 </template>
 
 <script setup lang="ts">
-  import { RouterView } from 'vue-router'
+  import { RouterView, useRouter } from 'vue-router'
   import MenuAside from '@/components/layout/MenuAside.vue'
+
+  const router = useRouter()
+  function jump() {
+    router.push('/review')
+  }
 </script>
 
 <style scoped lang="less">
@@ -39,10 +45,15 @@
     .header {
       text-align: center;
       padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
 
       span {
-        font-size: 60px;
+        font-size: 50px;
         font-weight: 700;
+        cursor: pointer;
+        user-select: none;
 
         color: #a1c4fd;
         --color1: pink;

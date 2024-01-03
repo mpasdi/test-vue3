@@ -69,7 +69,7 @@
       border-radius: 7px;
       padding: 0 10px;
       overflow: hidden;
-      white-space: no-wrap;
+      white-space: nowrap;
       text-overflow: ellipsis;
       margin-bottom: 10px;
       cursor: pointer;
