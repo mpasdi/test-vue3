@@ -55,6 +55,14 @@ export const Background: RouteRecordRaw[] = [
         meta: {
           title: 'js 工具类测试'
         }
+      },
+      {
+        path: 'echartsTest',
+        name: 'EchartsTest',
+        component: () => import('@/views/background/modules/EchartsTest.vue'),
+        meta: {
+          title: 'echarts 测试'
+        }
       }
     ]
   }
