@@ -11,6 +11,8 @@
       <a-tab-pane :key="1" tab="map测试"><EchartsMap /></a-tab-pane>
       <a-tab-pane :key="2" tab="map2测试"><EchartsMap2 /></a-tab-pane>
       <a-tab-pane :key="3" tab="map3测试"><EchartsMap3 /></a-tab-pane>
+      <a-tab-pane :key="4" tab="雷达图测试"><EchartRadar /></a-tab-pane>
+      <a-tab-pane :key="5" tab="柱状图"><EchartsBar /></a-tab-pane>
     </a-tabs>
   </div>
 </template>
@@ -21,6 +23,8 @@
   import EchartsMap from '@/components/echarts/EchartsMap.vue'
   import EchartsMap2 from '@/components/echarts/EchartsMap2.vue'
   import EchartsMap3 from '@/components/echarts/EchartsMap3.vue'
+  import EchartRadar from '@/components/echarts/EchartRadar.vue'
+  import EchartsBar from '@/components/echarts/EchartsBar.vue'
 
   //
   const activeKey = ref(1)
