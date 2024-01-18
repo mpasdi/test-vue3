@@ -12555,6 +12555,6 @@
 <style scoped lang="less">
   .map-echarts {
     width: 1400px;
-    height: 800px;
+    height: 700px;
   }
 </style>

@@ -7,7 +7,7 @@
 <template>
   <div>
     <h1>echarts 测试</h1>
-    <a-tabs v-model:activeKey="activeKey" tab-position="left">
+    <a-tabs v-model:activeKey="activeKey" tab-position="left" destroyInactiveTabPane>
       <a-tab-pane :key="1" tab="map测试"><EchartsMap /></a-tab-pane>
       <a-tab-pane :key="2" tab="map2测试"><EchartsMap2 /></a-tab-pane>
       <a-tab-pane :key="3" tab="map3测试"><EchartsMap3 /></a-tab-pane>
