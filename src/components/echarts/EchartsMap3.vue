@@ -253,7 +253,7 @@
     console.log('lsm-----series', series.value)
     const option = {
       // backgroundColor: 'transparent',
-      backgroundColor: 'black',
+      // backgroundColor: 'black',
       tooltip: {
         className: 'custom-tooltip-bk-box', //添
         triggerOn: 'mousemove', // 鼠标移动时触发
@@ -261,12 +261,16 @@
         textStyle: { color: 'transparent' } //提示标签字体颜色
         // show: false
       }, // 必须有， geo中的 tooltip 才生效
+      grid: {
+        top: '10px'
+      },
       geo: {
         map: 'china',
         show: true,
         roam: false,
-        zoom: 1,
-        center: [113.83531246, 34.0267395887],
+        zoom: 1.22,
+        aspectScale: 0.81,
+        // center: [113.83531246, 34.0267395887],
         regions: hasDataProvinceInfo.value.map((item) => ({
           name: item.name,
           itemStyle: {
@@ -364,7 +368,7 @@
         },
         itemStyle: {
           normal: {
-            borderColor: 'rgba(147, 235, 248, 0.1)',
+            borderColor: 'rgba(147, 235, 248, 0.8)',
             borderWidth: 1,
             areaColor: {
               type: 'radial',
@@ -421,8 +425,11 @@
 
 <style scoped lang="less">
   .map-echarts {
-    width: 1400px;
-    height: 700px;
+    width: 956px;
+    height: 710px;
+    background: url('@/assets/bgs/bg22.png');
+    background-size: 100% 100%;
+    // background: orange;
   }
 
   :deep .custom-tooltip-bk-box {

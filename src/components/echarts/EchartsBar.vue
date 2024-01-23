@@ -1,3 +1,9 @@
+<!--
+ * @Author: lisongming
+ * @Date: 2024-01-18 11:28:51
+ * @LastEditors: lisongming
+ * @Description: 描述
+-->
 <template>
   <div>
     <div ref="mapEcharts" class="map-echarts"></div>
@@ -33,13 +39,6 @@
       legend: {
         show: false
       },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
-        show: false
-      },
       xAxis: {
         // type: 'value',
         boundaryGap: [0, 0.01],
@@ -63,10 +62,10 @@
       },
       series: [
         {
-          name: '2012',
+          // name: '2012',
           type: 'bar',
           data: [19325, 23438, 31000, 121594, 134141, 681807, 121211, 341211],
-          barCategoryGap: '50%',
+          // barCategoryGap: '50%',
           label: {
             show: true,
             position: 'right',
