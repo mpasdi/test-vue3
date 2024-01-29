@@ -19,10 +19,13 @@
     init()
   })
 
+  const allData = [100, 90, 80, 70, 60, 50, 40, 30, 20, 10]
+  const allY = ['a', 'b', 'c', 'd', 'e', 'f', 'j', 'h', 'i', 'g']
+  let myChart: any
   // echarts
   const mapEcharts = ref()
   function init() {
-    const myChart = echarts.init(unref(mapEcharts))
+    myChart = echarts.init(unref(mapEcharts))
 
     const option = {
       backgroundColor: 'black',
@@ -58,13 +61,18 @@
             color: 'rgb(246, 246, 244)'
           }
         },
-        data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World', 'World1', 'wirld2']
+        max: 5,
+        inverse: true,
+        animationDuration: 300,
+        animationDurationUpdate: 300,
+        data: allY.slice(0, 6)
       },
       series: [
         {
           // name: '2012',
+          realtimeSort: true,
           type: 'bar',
-          data: [19325, 23438, 31000, 121594, 134141, 681807, 121211, 341211],
+          data: allData.slice(0, 6),
           // barCategoryGap: '50%',
           label: {
             show: true,
@@ -85,6 +93,30 @@
 
     myChart.setOption(option)
   }
+
+  let index = 0
+  function run() {
+    index++
+    const data = allData.slice(0 + index, 6 + index)
+    const yData = allY.slice(0 + index, 6 + index)
+    console.log('lsm-----data', data)
+    if (data.length < 6) return
+    myChart.setOption({
+      yAxis: {
+        data: yData
+      },
+      series: [
+        {
+          type: 'bar',
+          data
+        }
+      ]
+    })
+  }
+
+  setInterval(function () {
+    run()
+  }, 3000)
 </script>
 
 <style scoped lang="less">
