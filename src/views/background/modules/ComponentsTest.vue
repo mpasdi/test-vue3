@@ -5,7 +5,7 @@
  * @Description: 组件测试
 -->
 <template>
-  <div>
+  <div class="wrap">
     <h1>组件测试，主要测试第三方组件</h1>
 
     <h2>1. input 标签中的type=image 测试</h2>
@@ -36,12 +36,49 @@
     <br />
     <a-range-picker v-model:value="commonTimevalue" />
     选中时间： {{ commonTimevalue }}
+
+    <h2>4. antd Carousel 走马灯测试</h2>
+    <div class="carousel-wrap">
+      <a-carousel ref="carouselRef" dot-position="left" :dots="false">
+        <div>
+          <h3>{{ showValue0 }}</h3>
+        </div>
+        <div>
+          <h3>{{ showValue1 }}</h3>
+        </div>
+      </a-carousel>
+    </div>
+    21
+    <div ref="echartRef" class="echart-class"></div>
+    <a-carousel dot-position="left" :dots="true">
+      <div>
+        <!-- <div ref="echartRef" class="echart-class"></div> -->
+      </div>
+      <div>
+        <h3>111</h3>
+      </div>
+    </a-carousel>
+
+    <!-- <div class="carousel-wrap">
+      <a-carousel dot-position="left" :dots="true">
+        <div>
+          <h3><EchartsLine /></h3>
+        </div>
+        <div>
+          <h3><EchartsBar /></h3>
+        </div>
+      </a-carousel>
+    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { onMounted, ref, unref } from 'vue'
   import { Dayjs } from 'dayjs'
+  import * as echarts from 'echarts'
+
+  // import EchartsLine from '@/components/echarts/EchartsLine.vue'
+  // import EchartsBar from '@/components/echarts/EchartsBar.vue'
 
   //types
   type RangeValue = [Dayjs, Dayjs]
@@ -91,14 +128,90 @@
 
   //   3. antd rangePicker v-model测试
   const commonTimevalue = ref<RangeValue>()
+
+  // 4 走马灯测试
+  const carouselRef = ref()
+  const data = new Array(10).fill(0).map((_, index) => 'value _ ' + index)
+  const showValue0 = ref(data[0])
+  const showValue1 = ref('')
+  const currentValue = ref(0)
+  let currentIndex = 0
+
+  onMounted(() => {
+    let interTimer: any = setInterval(() => {
+      currentIndex++
+      if (currentIndex > data.length - 1) {
+        clearInterval(interTimer)
+        return
+      }
+      if (currentValue.value == 0) {
+        currentValue.value = 1
+        showValue1.value = data[currentIndex]
+      } else {
+        currentValue.value = 0
+        showValue0.value = data[currentIndex]
+      }
+      console.log('lsm-----ref', carouselRef.value)
+      carouselRef.value.next()
+    }, 4000)
+
+    initEchart()
+  })
+
+  const echartRef = ref()
+  let echartInstance: any
+  function initEchart() {
+    echartInstance = echarts.init(unref(echartRef))
+    let option = {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [150, 230, 224, 218, 135, 147, 260],
+          type: 'line'
+        }
+      ]
+    }
+    echartInstance.setOption(option)
+  }
 </script>
 
 <style scoped lang="less">
+  .wrap {
+    height: 100%;
+    overflow: auto;
+  }
   .input-image {
     width: 200px;
   }
 
   .disabled-css {
     pointer-events: v-bind(disabledcss);
+  }
+
+  .carousel-wrap {
+    width: 1000px;
+  }
+
+  .ant-carousel :deep(.slick-slide) {
+    text-align: center;
+    height: 200px;
+    line-height: 160px;
+    background: #364d79;
+    overflow: hidden;
+  }
+
+  .ant-carousel :deep(.slick-slide h3) {
+    color: #fff;
+  }
+
+  .echart-class {
+    width: 200px;
+    height: 200px;
   }
 </style>
