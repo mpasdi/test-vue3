@@ -11,11 +11,19 @@ export const Background: RouteRecordRaw[] = [
     path: '/background',
     name: 'Background',
     component: () => import('@/views/background/index.vue'),
-    redirect: '/background/directive',
+    redirect: '/background/tdtTest',
     meta: {
       title: '后台测试'
     },
     children: [
+      {
+        path: 'tdtTest',
+        name: 'TdtTest',
+        component: () => import('@/views/background/modules/TdtTest.vue'),
+        meta: {
+          title: '天地图测试'
+        }
+      },
       {
         path: 'directive',
         name: 'Directive',
