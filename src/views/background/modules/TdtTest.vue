@@ -11,6 +11,7 @@
       icon-common-path="icons/"
       :point-arr="pointArr"
       ref="TDTMapInfoWindowRef"
+      is-show-label
     >
       <!-- 自定义弹窗 -->
       <template #infoWindow="{ windowInfo }">
@@ -24,6 +25,9 @@
 
           <!-- <a-button @click="TDTMapInfoWindowRef.closeInfoWindow(false)> 关闭 </a-button> -->
         </div>
+      </template>
+      <template #mapLabel="{ labelInfo }">
+        <div class="map-label">{{ labelInfo?.pointPosition }}</div>
       </template>
     </TDTMapInfoWindow>
 
@@ -100,5 +104,17 @@
     position: absolute;
     top: 10px;
     left: 10px;
+  }
+
+  .map-label {
+    background: rgba(130, 110, 142, 0.6);
+    padding: 5px 15px;
+    border-radius: 3px;
+    width: fit-content;
+    overflow: hidden;
+    transform: translate3d(-68%, -200%, 0);
+    // position: absolute;
+    // top: -100px;
+    // left: -100%;
   }
 </style>

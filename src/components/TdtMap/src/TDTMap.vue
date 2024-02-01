@@ -16,7 +16,7 @@
 
   // vue api
   onMounted(async () => {
-    await initMap()
+    initMap()
     handMapClickHandler()
     addMarker()
   })
