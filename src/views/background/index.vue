@@ -85,6 +85,8 @@
         border-radius: 10px;
         padding: 10px;
         background-color: rgba(255, 255, 255, 0.3);
+        overflow-y: auto;
+        height: calc(100vh - 300px);
       }
     }
   }

@@ -19,11 +19,34 @@
     <!-- 深拷贝 deepClone -->
     <h2>深拷贝 deepClone</h2>
     <p>xx=-=-=-=-=> 请看控制台</p>
+
+    <h2>使用a元素实现下载</h2>
+    <a-button
+      @click="
+        downloadByAEle('http://122.152.220.184:8223/api/downloadFile/test%E4%B8%8B%E8%BD%BD.txt')
+      "
+    >
+      下载
+    </a-button>
+
+    <!-- 前端实现导出功能 -->
+    <h2>前端实现导出功能</h2>
+    <a-button type="primary" @click="tableExport(columnsObj, tableData, 'test.xlsx')">
+      导出表格
+    </a-button>
+    <a-table :dataSource="tableData" :columns="columns" />
+
+    <!-- 复制文本功能 -->
+    <h2>文本复制功能</h2>
+    <a-button @click="textCopy(tableData)">文本拷贝</a-button>
+
+    <h2></h2>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { arrayFlat, deepClone } from '@/utils/toolMethods'
+  import { arrayFlat, deepClone, downloadByAEle, tableExport, textCopy } from '@/utils/toolMethods'
+  import { computed } from 'vue'
 
   // arrayFlat
   const arr1 = [[100]]
@@ -60,6 +83,26 @@
   obj2New[1][1] = 200
   console.log('lsm-----obj2', obj2)
   console.log('lsm-----obj2New', obj2New)
+
+  // tableExport
+  const columnsObj = {
+    name: '姓名',
+    age: '年龄',
+    address: '地址'
+  }
+  const tableData = new Array(3).fill(0).map((_, index) => ({
+    id: index,
+    name: '姓名' + index,
+    age: '年龄' + index,
+    address: '地址' + index
+  }))
+  const columns = computed(() => {
+    return Object.entries(columnsObj).map((item) => ({
+      title: item[1],
+      dataIndex: item[0],
+      key: item[0]
+    }))
+  })
 </script>
 
 <style scoped lang="less"></style>

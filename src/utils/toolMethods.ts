@@ -77,4 +77,83 @@ function deepClone<T extends Array<any> | { [name: string | number]: any }>(obj:
   return temObj
 }
 
-export { throttle, debounce, arrayFlat, deepClone }
+/**
+ * a链接导出
+ * @param url url
+ * @param fileName 下载文件名
+ */
+function downloadByAEle(url: string, fileName = 'download') {
+  if (!url) return
+  const a = document.createElement('a')
+  a.href = url
+  a.download = fileName
+  a.setAttribute('display', 'none')
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+}
+
+/**
+ * 导出表格
+ * @param columns object englishName对应table中的englishName  value对应中文表单
+ * @param tableData 表数据
+ * , 换列
+ * \r\t 换行
+ */
+function tableExport(
+  columns: { [englishName: string]: string },
+  tableData: Array<{ [englishName: string | number]: any }>,
+  fileName: string
+) {
+  console.log(columns, tableData)
+  let tableStr = ''
+  Object.values(columns).forEach((item) => {
+    tableStr += item + ','
+  })
+  tableStr += '\r\n'
+
+  tableData.forEach((item) => {
+    Object.keys(columns).forEach((key) => {
+      tableStr += (item[key] ?? '--') + ','
+    })
+    tableStr += '\r\n'
+  })
+
+  const downloadUrl = 'data:text/xls;charset=utf-8,\ufeff' + encodeURIComponent(tableStr)
+  downloadByAEle(downloadUrl, fileName)
+}
+
+/**
+ * 文本拷贝
+ * @param text 拷贝内容
+ */
+function textCopy(text) {
+  if ('clipboard' in navigator) {
+    console.log('use navigator.clipboard api')
+    navigator.clipboard
+      .writeText(text)
+      .then((_) => {
+        console.info('复制成功')
+      })
+      .catch((error) => {
+        console.error('复制失败 : ' + error)
+      })
+  } else {
+    console.log('use document.execCommand api')
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    textArea.setAttribute('display', 'none')
+    document.body.appendChild(textArea)
+    textArea.select()
+    try {
+      document.execCommand('copy')
+      console.info('复制成功')
+    } catch (error) {
+      console.error('复制失败 : ' + error)
+    } finally {
+      document.body.removeChild(textArea)
+    }
+  }
+}
+
+export { throttle, debounce, arrayFlat, deepClone, downloadByAEle, tableExport, textCopy }
