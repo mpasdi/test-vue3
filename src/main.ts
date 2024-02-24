@@ -9,6 +9,7 @@ import { createPinia } from 'pinia'
 
 import '@/css/index'
 import { registerUiComponents } from './utils/registerUiComponent'
+import registerDirective from '@/utils/redgisterDirective'
 
 import App from './App.vue'
 import router from './router'
@@ -20,5 +21,8 @@ app.use(router)
 
 // 注册ui组件
 registerUiComponents(app)
+
+// 注册自定义组件
+registerDirective(app)
 
 app.mount('#app')
