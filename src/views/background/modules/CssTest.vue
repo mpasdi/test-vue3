@@ -11,6 +11,9 @@
     <div class="nth">
       <span v-for="item in 4" :key="item">{{ item }}</span>
     </div>
+
+    <h2>文字涂鸦</h2>
+    <div class="font-griffiti">文字涂鸦测试</div>
   </div>
 </template>
 
@@ -34,5 +37,15 @@
     span:nth-of-type(3) {
       background-color: palevioletred;
     }
+  }
+
+  .font-griffiti {
+    font-size: 20px;
+    font-weight: 550;
+    display: inline-block;
+    background: linear-gradient(to right, skyblue, orange);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
   }
 </style>
