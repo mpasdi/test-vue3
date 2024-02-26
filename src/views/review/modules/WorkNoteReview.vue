@@ -25,6 +25,9 @@
 
     <h2>requestAnimationFrame</h2>
     <div>{{ currentTime }}</div>
+
+    <h2>文件切片上传</h2>
+    <input type="file" accept=".mp4,.md" ref="bigVideo" />
   </div>
 </template>
 
@@ -32,7 +35,9 @@
   //set test
   import { computed, onBeforeMount, ref, nextTick, onMounted } from 'vue'
   import { getImageData } from '@/api/getApi/imagesApi'
+  import { pieceUpload } from '@/api/postApi/fileApi'
   import dayjs from 'dayjs'
+  import { AxiosResponse } from 'axios'
 
   // vue api
   onBeforeMount(() => {
@@ -42,6 +47,7 @@
   onMounted(() => {
     inputFileChangeEvent()
     refreshTime()
+    bigFileUpload()
   })
 
   // set
@@ -144,6 +150,67 @@
     // }, 1000)
     currentTime.value = dayjs().format('YYYY-MM-DD : HH:mm:ss')
     requestAnimationFrame(refreshTime)
+  }
+
+  //   文件切片上传
+  const bigVideo = ref()
+  function bigFileUpload() {
+    bigVideo.value.addEventListener('change', (event) => {
+      const file = event.target.files[0]
+      if (!file) return
+
+      const fileSize = file.size
+      const pieceSize = 1024 * 1024 // 1m
+      const totalPiece = Math.ceil(fileSize / pieceSize)
+      const fileName = file.name
+      let pieceFileMap: Map<number, File> = new Map<number, File>()
+
+      for (let i = 0; i < totalPiece; i++) {
+        let currentPiece: File = file.slice(i * pieceSize, (i + 1) * pieceSize)
+        if (i === totalPiece - 1) {
+          currentPiece = file.slice(i * pieceSize, fileSize)
+        }
+        pieceFileMap.set(i, currentPiece)
+      }
+
+      function loopUpload() {
+        let loopIndex = 0
+        const failUploadPiece: Map<number, File> = new Map<number, File>()
+        const taskArr: any = []
+        const maxReqNum = 5
+
+        pieceFileMap.forEach(async (item, index) => {
+          const formData = new FormData()
+          formData.append('pieceFile', item)
+          formData.append('fileIndex', index.toString())
+          formData.append('totalPiece', totalPiece.toString())
+          formData.append('fileName', fileName)
+
+          const task = pieceUpload(formData)
+            .then(() => {
+              const successIndex = taskArr.findIndex((el) => el === task)
+              taskArr.splice(successIndex, 1)
+            })
+            .catch((err) => {
+              console.log('error: ', err)
+              failUploadPiece.set(index, item)
+            })
+            .finally(() => {
+              loopIndex++
+              if (loopIndex === pieceFileMap.size - 1 && failUploadPiece.size > 0) {
+                pieceFileMap = failUploadPiece
+                loopUpload()
+              }
+            })
+
+          taskArr.push(task)
+          if (taskArr.length === maxReqNum) {
+            await Promise.race(taskArr)
+          }
+        })
+      }
+      loopUpload()
+    })
   }
 </script>
 
