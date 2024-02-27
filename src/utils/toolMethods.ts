@@ -85,9 +85,8 @@ function deepClone<T extends Array<any> | { [name: string | number]: any }>(obj:
 function downloadByAEle(url: string, fileName = 'download') {
   if (!url) return
   const a = document.createElement('a')
-  a.href = url
-  a.download = fileName
-  a.setAttribute('display', 'none')
+  a.setAttribute('href', url)
+  a.setAttribute('download', fileName)
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
@@ -97,8 +96,8 @@ function downloadByAEle(url: string, fileName = 'download') {
  * 导出表格
  * @param columns object englishName对应table中的englishName  value对应中文表单
  * @param tableData 表数据
- * , 换列
- * \r\t 换行
+ * @param  fileName 文件名
+ *
  */
 function tableExport(
   columns: { [englishName: string]: string },
@@ -106,7 +105,7 @@ function tableExport(
   fileName: string
 ) {
   console.log(columns, tableData)
-  let tableStr = ''
+  let tableStr = '\ufeff' // 使 , 有换行效果
   Object.values(columns).forEach((item) => {
     tableStr += item + ','
   })
@@ -119,8 +118,11 @@ function tableExport(
     tableStr += '\r\n'
   })
 
-  const downloadUrl = 'data:text/xls;charset=utf-8,\ufeff' + encodeURIComponent(tableStr)
+  // const downloadUrl = 'data:text/plain;charset=utf-8,' + encodeURIComponent(tableStr)
+  const urlBlob = new Blob([tableStr], { type: 'text/plain;charset=UTF-8' })
+  const downloadUrl = URL.createObjectURL(urlBlob)
   downloadByAEle(downloadUrl, fileName)
+  URL.revokeObjectURL(downloadUrl)
 }
 
 /**

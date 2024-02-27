@@ -7,7 +7,7 @@
 import axios from 'axios'
 import { ContentTypeEnum } from '@/utils/enums'
 
-export const request = axios.create({
+const request = axios.create({
   baseURL: '/api',
   timeout: 10000,
   headers: {
@@ -22,3 +22,5 @@ request.interceptors.request.use((config) => {
 request.interceptors.response.use((config) => {
   return config
 })
+
+export default request
