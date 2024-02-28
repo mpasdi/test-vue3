@@ -184,7 +184,7 @@
 <style scoped lang="less">
   .wrap {
     height: 100%;
-    overflow: auto;
+    // overflow: auto;
   }
   .input-image {
     width: 200px;

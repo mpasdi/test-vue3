@@ -88,6 +88,28 @@
         overflow-y: auto;
         height: calc(100vh - 300px);
       }
+
+      .content::-webkit-scrollbar {
+        // color: rebeccapurple;
+        width: 8px;
+        // height: 10px;
+
+        // display: none;
+      }
+
+      .content::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 4px;
+        background-image: linear-gradient(to bottom, red, orange, skyblue);
+      }
+      .content::-webkit-scrollbar-track {
+        background-color: orange;
+        border-radius: 4px;
+        background-image: linear-gradient(to bottom, orange, pink);
+      }
+      // .content::-webkit-scrollbar-button {
+      //   background-color: red;
+      // }
     }
   }
 </style>

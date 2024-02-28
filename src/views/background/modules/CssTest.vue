@@ -14,6 +14,11 @@
 
     <h2>文字涂鸦</h2>
     <div class="font-griffiti">文字涂鸦测试</div>
+
+    <h2>元素靠右 margin-left: auto</h2>
+    <div class="margin-test">
+      <span>😂🎇 (ง •_•)ง</span>
+    </div>
   </div>
 </template>
 
@@ -47,5 +52,15 @@
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+  }
+
+  .margin-test {
+    background-color: olivedrab;
+    display: flex;
+
+    span {
+      color: white;
+      margin-left: auto;
+    }
   }
 </style>
