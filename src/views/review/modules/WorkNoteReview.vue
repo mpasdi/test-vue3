@@ -28,6 +28,9 @@
 
     <h2>文件切片上传</h2>
     <input type="file" accept=".mp4,.md" ref="bigVideo" />
+
+    <h2>env 环境变量</h2>
+    <div>{{ appName }}</div>
   </div>
 </template>
 
@@ -37,7 +40,6 @@
   import { getImageData } from '@/api/getApi/imagesApi'
   import { pieceUpload } from '@/api/postApi/fileApi'
   import dayjs from 'dayjs'
-  import { AxiosResponse } from 'axios'
 
   // vue api
   onBeforeMount(() => {
@@ -212,6 +214,10 @@
       loopUpload()
     })
   }
+
+  //   env
+  const appName = import.meta.env.VITE_APP_NAME
+  console.log(import.meta.env)
 </script>
 
 <style scoped lang="less">

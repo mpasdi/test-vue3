@@ -21,6 +21,9 @@
     <h2>页面跳转 window.open,location.href</h2>
     <a-button @click="jumpOpen">open</a-button>
     <a-button @click="jumpHref">jump</a-button>
+
+    <h2>window.print</h2>
+    <a-button @click="print">print</a-button>
   </div>
 </template>
 
@@ -68,6 +71,11 @@
   }
   function jumpHref() {
     location.href = 'https://www.baidu.com'
+  }
+
+  //   print
+  function print() {
+    window.print()
   }
 </script>
 
