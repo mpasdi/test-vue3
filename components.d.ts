@@ -7,11 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AButton: (typeof import('ant-design-vue/es'))['Button']
-    ACarousel: (typeof import('ant-design-vue/es'))['Carousel']
-    AInput: (typeof import('ant-design-vue/es'))['Input']
-    ARangePicker: (typeof import('ant-design-vue/es'))['RangePicker']
-    ATable: (typeof import('ant-design-vue/es'))['Table']
+    AButton: typeof import('ant-design-vue/es')['Button']
+    ACarousel: typeof import('ant-design-vue/es')['Carousel']
+    AInput: typeof import('ant-design-vue/es')['Input']
+    ARangePicker: typeof import('ant-design-vue/es')['RangePicker']
+    ATable: typeof import('ant-design-vue/es')['Table']
     EchartRadar: typeof import('./src/components/echarts/EchartRadar.vue')['default']
     EchartsBar: typeof import('./src/components/echarts/EchartsBar.vue')['default']
     EchartsBing: typeof import('./src/components/echarts/EchartsBing.vue')['default']

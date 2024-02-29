@@ -21,8 +21,8 @@ const imageLazyLoad = (el, binding) => {
     })
   }
 }
-function registerDirective(app: App) {
-  app.directive('imageLazyLoad', imageLazyLoad)
+export const registerDirective = {
+  install(app: App) {
+    app.directive('imageLazyLoad', imageLazyLoad)
+  }
 }
-
-export default registerDirective
