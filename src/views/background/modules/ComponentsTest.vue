@@ -73,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref, unref } from 'vue'
+  import { onMounted, ref, unref, onUnmounted } from 'vue'
   import { Dayjs } from 'dayjs'
   import * as echarts from 'echarts'
 
@@ -136,9 +136,10 @@
   const showValue1 = ref('')
   const currentValue = ref(0)
   let currentIndex = 0
+  let interTimer: any
 
   onMounted(() => {
-    let interTimer: any = setInterval(() => {
+    interTimer = setInterval(() => {
       currentIndex++
       if (currentIndex > data.length - 1) {
         clearInterval(interTimer)
@@ -156,6 +157,10 @@
     }, 4000)
 
     initEchart()
+  })
+
+  onUnmounted(() => {
+    clearInterval(interTimer)
   })
 
   const echartRef = ref()
