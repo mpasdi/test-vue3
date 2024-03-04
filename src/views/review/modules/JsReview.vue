@@ -24,15 +24,24 @@
 
     <h2>window.print</h2>
     <a-button @click="print">print</a-button>
+
+    <h2>websocket</h2>
+    <a-input v-model:value="sendWsData"></a-input>
+    <a-button @click="sendData">发送消息</a-button>
+    <a-input v-model:value="receiveWsData"></a-input>
+    <div>test</div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, onMounted } from 'vue'
+  import { computed, ref, onMounted, onUnmounted } from 'vue'
 
   // vue api
   onMounted(() => {
     getFetchImg()
+  })
+  onUnmounted(() => {
+    webSocket.close()
   })
 
   const arr = [1, '31', null, NaN, true, false, undefined, Infinity, 0]
@@ -77,6 +86,24 @@
   function print() {
     window.print()
   }
+
+  //   websocket
+  const receiveWsData = ref<string>()
+  const sendWsData = ref<string>()
+  const webSocket = new WebSocket('ws://localhost:9883')
+  function sendData() {
+    webSocket.send(sendWsData.value as string)
+  }
+
+  webSocket.onopen = () => {
+    console.log('WebSocket connection opened')
+  }
+  webSocket.onmessage = (message) => {
+    receiveWsData.value = message.data as string
+    console.log('lsm----ws data: ', message)
+  }
+  webSocket.onerror = () => {}
+  webSocket.onclose = () => {}
 </script>
 
 <style scoped lang="less">
