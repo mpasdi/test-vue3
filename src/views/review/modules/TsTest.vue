@@ -42,6 +42,7 @@
       <div>只读属性：{{ person }}</div>
       <div>对象签名（属性不确定）：{{ obj2 }}</div>
       <div>接口继承 {{ obj3 }}</div>
+      <div>泛型对象 {{ obj4 }}</div>
     </div>
   </div>
 </template>
@@ -78,7 +79,8 @@
   const extend = ref<extendType>({ name: 'lsm', id: 1 })
   const text = ref<'lsm' | 'xcz'>()
   text.value = str.value as 'lsm'
-  text.value = <'xcz'>str.value
+  // text.value = <'lsm'>str.value
+  text.value = str.value as const
 
   const symbol = ref<symbol>(Symbol(12))
   const bigInt = ref<bigint>(BigInt(12.0))
@@ -96,7 +98,10 @@
     // if ((err = '代码错误！')) {
     //   throw new Error(err)
     // }
-    while (true) {}
+    let val = true
+    while (val) {
+      // console.log()
+    }
   }
 
   class Fruit<T> {
@@ -121,6 +126,7 @@
   async function func1() {
     let a = 1
     a++
+    console.log(a)
   }
   console.log('lsm func1', func1())
   function func2() {
@@ -212,6 +218,18 @@
   let val1 = 'lsm'
   let val1Type: typeof val1 = 'aa'
   console.log('lsm type val1', val1Type)
+
+  interface obj4Type<T> {
+    height: number
+    color: string
+    attr: T
+  }
+
+  const obj4: obj4Type<string> = {
+    height: 12,
+    color: 11,
+    attr: 'any'
+  }
 </script>
 
 <style scoped lang="less">
