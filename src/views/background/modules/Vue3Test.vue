@@ -38,6 +38,13 @@
       <a-button @click="unrefVa++">自增</a-button>
       unrefVa: {{ unrefVa }}
     </div>
+
+    <h2>pinia测试</h2>
+    <div>{{ userStore.getUserInfo }}</div>
+    <div>
+      <a-button @click="resetState">重置state</a-button>
+      <a-button @click="batchUpdateState">批量更改state</a-button>
+    </div>
   </div>
 </template>
 
@@ -59,13 +66,16 @@
     readonly
   } from 'vue'
   import SubComponentOne from '@/components/subComponentsTest/SubComponentOne.vue'
+  import { useUser } from '@/stores/modules/user'
 
+  // vue
   onMounted(() => {
     subCompRef.value.compFunc()
   })
   onUnmounted(() => {
     stopWatcher()
   })
+  const userStore = useUser()
 
   const numRef = ref()
   const num: Ref<number> = ref(0)
@@ -121,6 +131,25 @@
   const toRawVal = toRaw(refVal)
   const unrefVa = unref(toRefVal)
   console.log('lsm---ref val', toRefVal, toRawVal)
+
+  // pinia
+  const userInfo = {
+    userName: 'lsm',
+    userAge: 27
+  }
+  userStore.setUserInfo(userInfo)
+
+  function resetState() {
+    userStore.$reset()
+  }
+  function batchUpdateState() {
+    userStore.$patch((state) => {
+      state.userInfo = Object.assign({}, userInfo, { userName: 'other' }) as any
+    })
+  }
+  userStore.$subscribe(() => {
+    console.log('store, info update')
+  })
 </script>
 
 <style scoped lang="less"></style>
