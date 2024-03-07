@@ -23,7 +23,7 @@
     console.log('lsm----sub numVal', proVal.value)
     // proVal.value = 10 // 不会生效
   })
-  const proVal = inject('numVal', 10)
+  const proVal = inject('numVal', ref(10))
   const userStore = useUser()
 
   // data

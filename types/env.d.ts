@@ -5,6 +5,7 @@
  * @Description: 描述
  */
 /// <reference types="vite/client" />
+export {}
 
 declare global {
   declare interface Window {

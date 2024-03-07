@@ -80,7 +80,7 @@
   const text = ref<'lsm' | 'xcz'>()
   text.value = str.value as 'lsm'
   // text.value = <'lsm'>str.value
-  text.value = str.value as const
+  // text.value = str.value as const // 不行
 
   const symbol = ref<symbol>(Symbol(12))
   const bigInt = ref<bigint>(BigInt(12.0))
@@ -94,14 +94,17 @@
     return undefined
   }
   function returnNever(): never {
-    // let err: string
-    // if ((err = '代码错误！')) {
-    //   throw new Error(err)
-    // }
-    let val = true
-    while (val) {
-      // console.log()
+    let err: string
+    if ((err = '代码错误！')) {
+      throw new Error(err)
+    } else {
+      throw new Error(err)
     }
+    // let val = true
+    // while (val) {
+    //   // console.log()
+    //   throw new Error('error')
+    // }
   }
 
   class Fruit<T> {
@@ -227,7 +230,7 @@
 
   const obj4: obj4Type<string> = {
     height: 12,
-    color: 11,
+    color: '11',
     attr: 'any'
   }
 </script>
