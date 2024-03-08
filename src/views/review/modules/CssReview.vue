@@ -19,12 +19,17 @@
     <div class="css-grid-area">
       <div class="css-grid-area_item" v-for="item in 4" :key="item">{{ item }}</div>
     </div>
+
+    <h2>盒模型</h2>
+    <div class="standard-box">1</div>
+    <div class="wired-box">2</div>
   </div>
 </template>
 
 <script setup lang="ts"></script>
 
 <style scoped lang="less">
+  @custom-color: #c3d08b;
   .css-flex {
     display: flex;
     background-color: orangered;
@@ -50,7 +55,7 @@
   }
 
   .css-grid {
-    background-color: orange;
+    background-color: @custom-color;
     font-size: 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr); // 容器：垂直三列
@@ -73,8 +78,18 @@
     }
   }
 
+  .custom-color(@color) {
+    background-color: @color;
+  }
+  .custom-item(@color) {
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+    color: @color;
+    border: 1px solid @color;
+  }
   .css-grid-area {
-    background-color: skyblue;
+    .custom-color(skyblue);
     font-size: 20px;
     display: grid;
     grid-template-areas: 'header header' 'header body' 'foot .';
@@ -87,12 +102,28 @@
     align-content: center;
     &_item {
       // width: 30px;
-      height: 50px;
-      border: 2px solid saddlebrown;
+      .custom-item(saddlebrown);
     }
 
     &_item:nth-child(1) {
       grid-area: header;
     }
+  }
+
+  .custom-box(@color) {
+    color: @color;
+    width: 100px;
+    height: 100px;
+    border: 20px solid @color;
+    padding: 10px;
+    margin: 10px;
+  }
+  .standard-box {
+    .custom-box(aqua);
+    box-sizing: content-box;
+  }
+  .wired-box {
+    .custom-box(orange);
+    box-sizing: border-box;
   }
 </style>
