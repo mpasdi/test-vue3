@@ -39,6 +39,14 @@ export const Review: RouteRecordRaw[] = [
         meta: {
           title: '工作笔记复习'
         }
+      },
+      {
+        path: 'cssReview',
+        name: 'CssReview',
+        component: () => import('@/views/review/modules/CssReview.vue'),
+        meta: {
+          title: 'css复习'
+        }
       }
     ]
   }
