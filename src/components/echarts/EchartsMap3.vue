@@ -13,7 +13,7 @@
 <script setup lang="ts">
   import { onMounted, ref, unref } from 'vue'
   import * as echarts from 'echarts'
-  import chinaJson from './ChinaMapGeojson.json'
+  import chinaJson from './ChinaMapGeoJson.json'
 
   // vue api
   onMounted(() => {

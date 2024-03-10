@@ -94,7 +94,7 @@
     return undefined
   }
   function returnNever(): never {
-    let err: string
+    let err: string = ''
     if (err == '代码错误！') {
       throw new Error(err)
     } else {
