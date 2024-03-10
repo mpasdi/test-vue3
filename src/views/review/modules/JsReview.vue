@@ -30,6 +30,14 @@
     <a-button @click="sendData">发送消息</a-button>
     <a-input v-model:value="receiveWsData"></a-input>
     <div>test</div>
+
+    // map set weakMap weakSet
+    <h2>map set weakMap weakSet</h2>
+    <div>custom_map : {{ custom_map }}</div>
+
+    <div>custom_weakmap : {{ custom_weakmap }}</div>
+    <div>custom_set : {{ custom_set }}</div>
+    <div>custom_weakset : {{ custom_weakset }}</div>
   </div>
 </template>
 
@@ -104,6 +112,43 @@
   }
   webSocket.onerror = () => {}
   webSocket.onclose = () => {}
+
+  //   map set weakMap weakSet
+  let sym = Symbol()
+  const custom_map = new Map()
+  custom_map.set(1, 'lsm')
+  custom_map.set(1, 'other')
+  custom_map.set('3', 'other people3')
+  custom_map.set('2', 'other people2')
+  custom_map.set(0, 'other 0')
+  custom_map.delete(0)
+  custom_map.set(sym, 'symbol value')
+  for (let customMapElementKey in custom_map[Symbol.iterator]) {
+    console.log('lsm--symbol', customMapElementKey)
+  }
+  console.log('lsm--- sym', custom_map.get(sym))
+  console.log('lsm----entries', custom_map.entries())
+  console.log(
+    'lsm----custom_map',
+    custom_map,
+    custom_map.size,
+    custom_map.has(1),
+    custom_map.get(1)
+  )
+  // custom_map.forEach((item, key) => {
+  //   console.log('lsm----map item', item, key)
+  // })
+  console.log('lsm----- to array', [...custom_map], Array.from(custom_map))
+  console.log('lsm----from entries', Object.fromEntries(custom_map))
+  console.log('lsm----obj entries', Object.entries(Object.fromEntries(custom_map)))
+
+  const custom_weakmap = new WeakMap()
+  const custom_set = new Set()
+  const custom_weakset = new WeakSet()
+
+  setTimeout(() => {
+    console.log('lsm------custom_map', custom_map)
+  }, 3000)
 </script>
 
 <style scoped lang="less">
