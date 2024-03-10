@@ -19,6 +19,10 @@
     <div class="margin-test">
       <span>😂🎇 (ง •_•)ง</span>
     </div>
+
+    <h2>盒模型测试</h2>
+    <div class="box-type"></div>
+    <div class="box-type1"></div>
   </div>
 </template>
 
@@ -62,5 +66,20 @@
       color: white;
       margin-left: auto;
     }
+  }
+
+  .base-box(@color) {
+    width: 100px;
+    height: 100px;
+    color: @color;
+    border: 10px solid @color;
+    padding: 10px;
+    margin: 10px;
+  }
+  .box-type {
+    .base-box(red);
+  }
+  .box-type1 {
+    .base-box(orange);
   }
 </style>
