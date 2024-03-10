@@ -40,12 +40,26 @@
     <h2>文本复制功能</h2>
     <a-button @click="textCopy(tableData)">文本拷贝</a-button>
 
-    <h2></h2>
+    <h2>instanceof 实现</h2>
+    <div>{{ ins_obj }} ---- {{ customInstanceof(ins_obj, Object) }}</div>
+    <div>{{ ins_arr }} ---- {{ customInstanceof(ins_arr, Array) }}</div>
+    <div>{{ ins_fun }} ---- {{ customInstanceof(ins_fun, Object) }}</div>
+    <div>{{ ins_map }} ---- {{ customInstanceof(ins_map, Map) }}</div>
+    <div>{{ ins_set }} ---- {{ customInstanceof(ins_set, Set) }}</div>
+    <div>ins_obj, Array ---- {{ customInstanceof(ins_obj, Array) }}</div>
+    <div>null object ---- {{ customInstanceof(null, Object) }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { arrayFlat, deepClone, downloadByAEle, tableExport, textCopy } from '@/utils/toolMethods'
+  import {
+    arrayFlat,
+    deepClone,
+    downloadByAEle,
+    tableExport,
+    textCopy,
+    customInstanceof
+  } from '@/utils/toolMethods'
   import { computed } from 'vue'
 
   // arrayFlat
@@ -103,6 +117,13 @@
       key: item[0]
     }))
   })
+
+  //   instanceof
+  let ins_obj = {}
+  let ins_arr = []
+  let ins_fun = function () {}
+  let ins_map = new Map()
+  let ins_set = new Set()
 </script>
 
 <style scoped lang="less"></style>

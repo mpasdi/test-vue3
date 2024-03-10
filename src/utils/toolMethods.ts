@@ -158,4 +158,93 @@ function textCopy(text) {
   }
 }
 
-export { throttle, debounce, arrayFlat, deepClone, downloadByAEle, tableExport, textCopy }
+/**
+ * 文件切片上传
+ * @param file 原始文件
+ * @param callback 文件上传接口
+ */
+function bigFileUpload(file: File, callback: Function) {
+  if (!file) return
+
+  const fileSize = file.size
+  const pieceSize = 1024 * 1024 // 1m
+  const totalPiece = Math.ceil(fileSize / pieceSize)
+  const fileName = file.name
+  let pieceFileMap: Map<number, Blob> = new Map<number, Blob>()
+
+  for (let i = 0; i < totalPiece; i++) {
+    let currentPiece: Blob = file.slice(i * pieceSize, (i + 1) * pieceSize)
+    if (i === totalPiece - 1) {
+      currentPiece = file.slice(i * pieceSize, fileSize)
+    }
+    pieceFileMap.set(i, currentPiece)
+  }
+
+  function loopUpload() {
+    let loopIndex = 0
+    const failUploadPiece: Map<number, Blob> = new Map<number, Blob>()
+    const taskArr: any = []
+    const maxReqNum = 5
+
+    pieceFileMap.forEach(async (item, index) => {
+      const formData = new FormData()
+      formData.append('pieceFile', item)
+      formData.append('fileIndex', index.toString())
+      formData.append('totalPiece', totalPiece.toString())
+      formData.append('fileName', fileName)
+
+      const task = callback(formData)
+        .then(() => {
+          const successIndex = taskArr.findIndex((el) => el === task)
+          taskArr.splice(successIndex, 1)
+        })
+        .catch((err) => {
+          console.log('error: ', err)
+          failUploadPiece.set(index, item)
+        })
+        .finally(() => {
+          loopIndex++
+          if (loopIndex === pieceFileMap.size - 1 && failUploadPiece.size > 0) {
+            pieceFileMap = failUploadPiece
+            loopUpload()
+          }
+        })
+
+      taskArr.push(task)
+      if (taskArr.length === maxReqNum) {
+        await Promise.race(taskArr)
+      }
+    })
+  }
+  loopUpload()
+}
+
+/**
+ * instanceof 实现
+ */
+function customInstanceof(value: any, constructor: any) {
+  if (!(typeof value === 'object' || typeof value === 'function') || !value) return false
+  console.log('lsm----inner value', value)
+  let proto = Object.getPrototypeOf(value)
+
+  // 递归调用
+  // if (proto === type.prototype) return true
+  // return customInstanceof(proto, type)
+
+  while (proto != null) {
+    if (proto === constructor.prototype) return true
+    proto = Object.getPrototypeOf(proto)
+  }
+  return false
+}
+export {
+  throttle,
+  debounce,
+  arrayFlat,
+  deepClone,
+  downloadByAEle,
+  tableExport,
+  textCopy,
+  bigFileUpload,
+  customInstanceof
+}
