@@ -114,41 +114,107 @@
   webSocket.onclose = () => {}
 
   //   map set weakMap weakSet
-  let sym = Symbol()
   const custom_map = new Map()
-  custom_map.set(1, 'lsm')
-  custom_map.set(1, 'other')
-  custom_map.set('3', 'other people3')
-  custom_map.set('2', 'other people2')
-  custom_map.set(0, 'other 0')
-  custom_map.delete(0)
-  custom_map.set(sym, 'symbol value')
-  for (let customMapElementKey in custom_map[Symbol.iterator]) {
-    console.log('lsm--symbol', customMapElementKey)
-  }
-  console.log('lsm--- sym', custom_map.get(sym))
-  console.log('lsm----entries', custom_map.entries())
-  console.log(
-    'lsm----custom_map',
-    custom_map,
-    custom_map.size,
-    custom_map.has(1),
-    custom_map.get(1)
-  )
-  // custom_map.forEach((item, key) => {
-  //   console.log('lsm----map item', item, key)
-  // })
-  console.log('lsm----- to array', [...custom_map], Array.from(custom_map))
-  console.log('lsm----from entries', Object.fromEntries(custom_map))
-  console.log('lsm----obj entries', Object.entries(Object.fromEntries(custom_map)))
-
   const custom_weakmap = new WeakMap()
   const custom_set = new Set()
   const custom_weakset = new WeakSet()
 
+  function mapSetTest() {
+    console.group('-----map --- start')
+    let sym = Symbol()
+    custom_map.set(1, 'lsm')
+    custom_map.set(1, 'other')
+    custom_map.set('3', 'other people3')
+    custom_map.set('2', 'other people2')
+    custom_map.set(0, 'other 0')
+    custom_map.delete(0)
+    custom_map.set(sym, 'symbol value')
+    custom_map.set(Number(1), 'number 1')
+    for (let customMapElementKey in custom_map[Symbol.iterator]) {
+      console.log('lsm--symbol', customMapElementKey)
+    }
+    console.log('lsm--- sym', custom_map.get(sym))
+    console.log('lsm----entries', custom_map.entries())
+    console.log(
+      'lsm----custom_map',
+      custom_map,
+      custom_map.size,
+      custom_map.has(1),
+      custom_map.get(1)
+    )
+    // custom_map.forEach((item, key) => {
+    //   console.log('lsm----map item', item, key)
+    // })
+    console.log('lsm----- to array', [...custom_map], Array.from(custom_map))
+    console.log('lsm----from entries', Object.fromEntries(custom_map))
+    console.log('lsm----obj entries', Object.entries(Object.fromEntries(custom_map)))
+    // custom_map.clear()
+    // console.log('lsm---- clear', custom_map)
+    console.groupEnd('-----map --- end')
+
+    console.group('lsm------weakmap----start')
+    const objKey = {}
+    const arrKey = []
+    const mapKey = new Map()
+    const funcKey = function () {}
+    // custom_weakmap.set(1, 'first')
+    // custom_weakmap.set(Number(1), 'second')
+    custom_weakmap.set(sym, 'third')
+    custom_weakmap.set(objKey, 'fourth')
+    custom_weakmap.set(arrKey, 'fifth')
+    custom_weakmap.set(funcKey, 'sixth')
+    custom_weakmap.set(mapKey, 'seventh')
+    custom_weakmap.delete(sym)
+
+    console.log('lsm----- to  array', Array.from(custom_weakmap))
+
+    console.log('lsm----has get', custom_weakmap.has(objKey), custom_weakmap.get(objKey))
+    console.log('lsm----weakmap current', custom_weakmap)
+    console.groupEnd()
+
+    console.group('lsm-----start ---- set ---')
+    const obj_set = {}
+    custom_set.add('eighth')
+    custom_set.add(obj_set)
+    custom_set.add(2)
+    custom_set.add(1)
+    custom_set.delete(2)
+    custom_set.forEach((value, key) => {
+      console.log('lsm----item value key', value, key)
+    })
+    console.log('lsm set keys', custom_set.keys())
+    console.log('lsm set values', custom_set.values())
+    console.log('lsm---- to array', Array.from(custom_set))
+
+    console.log('lsm---- obj_set', custom_set.has(obj_set))
+    console.groupEnd()
+
+    console.group('lsm-------start --------weak set')
+    const weakset_obj = {}
+    const weakset_arr = []
+    const refVal = ref(1)
+    custom_weakset.add(weakset_obj)
+    custom_weakset.add(weakset_arr)
+    custom_weakset.add(refVal)
+    custom_weakset.delete(weakset_arr)
+    console.log(
+      'lsm-----weakset has',
+      custom_weakset.has(weakset_obj),
+      custom_weakset.has(weakset_arr),
+      custom_weakset.has(refVal)
+    )
+
+    console.log('lsm-----weakset current', custom_weakset)
+
+    console.groupEnd()
+  }
+  mapSetTest()
   setTimeout(() => {
     console.log('lsm------custom_map', custom_map)
-  }, 3000)
+    console.log('lsm------custom_weakmap', custom_weakmap)
+    console.log('lsm------custom_set', custom_set)
+    console.log('lsm------custom_weakset', custom_weakset)
+  }, 2000)
 </script>
 
 <style scoped lang="less">
