@@ -43,6 +43,8 @@
     console.log('lsm----thenAwaitFunc()', thenAwaitFunc())
     const res3 = await thenAwaitFunc()
     console.log('lsm-----res3', res3)
+
+    forPromise()
   })
   function getPromise() {
     return new Promise((res, rej) => {
@@ -147,7 +149,7 @@
     console.groupEnd()
   }
 
-  // then he await
+  // then 和 await
   function thenAwaitFunc() {
     return Promise.resolve(212).then((res) => {
       console.log('lsm-----thenAwaitFuncs', res)
@@ -156,14 +158,46 @@
   }
 
   // for循环中的 promise
-  const temArr: any = []
-  const commonArr = new Array(20).fill(0)
-  commonArr.map(async (item, index) => {
-    console.log('lsm---item', item)
-    temArr.push(index)
-    console.log('lsm----temArr.length', temArr.length)
-    if (temArr.length === 5) await Promise.reject('error')
-  })
+  async function forPromise() {
+    const temArr: any = new Set()
+    const commonArr = new Array(20).fill(0).map(
+      (_, index) =>
+        function () {
+          return new Promise((res) => {
+            setTimeout(() => {
+              res(index)
+            }, 2000)
+          })
+        }
+    )
+
+    // commonArr.forEach(async (item) => {
+    //   const task = item().then((res) => {
+    //     console.log('lsm-----after ', res)
+    //     temArr.delete(task)
+    //   })
+    //   temArr.add(task)
+    //   if (temArr.size >= 5) {
+    //     console.log('lsm------inner stop ')
+    //     await Promise.race(temArr)
+    //   }
+    // })
+
+    console.group('lsm---- for of await start')
+    for (const item of commonArr) {
+      const task = item().then((res) => {
+        console.log('lsm-----after ', res)
+        temArr.delete(task)
+      })
+      temArr.add(task)
+      console.log('lsm-----size', temArr.size)
+      if (temArr.size >= 5) {
+        console.log('lsm------inner stop ')
+        await Promise.race(temArr)
+      }
+    }
+    console.groupEnd()
+  }
 </script>
 
 <style scoped></style>

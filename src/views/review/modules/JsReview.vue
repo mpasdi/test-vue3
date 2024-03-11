@@ -149,12 +149,15 @@
     // custom_map.forEach((item, key) => {
     //   console.log('lsm----map item', item, key)
     // })
+    for (const item of custom_map) {
+      console.log('lsm-----map item ', item)
+    }
     console.log('lsm----- to array', [...custom_map], Array.from(custom_map))
     console.log('lsm----from entries', Object.fromEntries(custom_map))
     console.log('lsm----obj entries', Object.entries(Object.fromEntries(custom_map)))
     // custom_map.clear()
     // console.log('lsm---- clear', custom_map)
-    console.groupEnd('-----map --- end')
+    console.groupEnd()
 
     console.group('lsm------weakmap----start')
     const objKey = {}
@@ -170,7 +173,7 @@
     custom_weakmap.set(mapKey, 'seventh')
     custom_weakmap.delete(sym)
 
-    console.log('lsm----- to  array', Array.from(custom_weakmap))
+    // console.log('lsm----- to  array', Array.from(custom_weakmap))
 
     console.log('lsm----has get', custom_weakmap.has(objKey), custom_weakmap.get(objKey))
     console.log('lsm----weakmap current', custom_weakmap)
@@ -186,6 +189,9 @@
     custom_set.forEach((value, key) => {
       console.log('lsm----item value key', value, key)
     })
+    for (const item of custom_set) {
+      console.log('lsm-----set item ', item)
+    }
     console.log('lsm set keys', custom_set.keys())
     console.log('lsm set values', custom_set.values())
     console.log('lsm---- to array', Array.from(custom_set))

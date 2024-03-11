@@ -175,13 +175,13 @@
         pieceFileMap.set(i, currentPiece)
       }
 
-      function loopUpload() {
+      async function loopUpload() {
         let loopIndex = 0
         const failUploadPiece: Map<number, File> = new Map<number, File>()
         const taskArr: any = []
         const maxReqNum = 5
 
-        pieceFileMap.forEach(async (item, index) => {
+        for (const [index, item] of taskArr) {
           const formData = new FormData()
           formData.append('pieceFile', item)
           formData.append('fileIndex', index.toString())
@@ -209,7 +209,7 @@
           if (taskArr.length === maxReqNum) {
             await Promise.race(taskArr)
           }
-        })
+        }
       }
       loopUpload()
     })
