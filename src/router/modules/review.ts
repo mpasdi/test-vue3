@@ -47,6 +47,14 @@ export const Review: RouteRecordRaw[] = [
         meta: {
           title: 'css复习'
         }
+      },
+      {
+        path: 'promiseReview',
+        name: 'PromiseReview',
+        component: () => import('@/views/review/modules/PromiseReview.vue'),
+        meta: {
+          title: 'promise复习'
+        }
       }
     ]
   }
