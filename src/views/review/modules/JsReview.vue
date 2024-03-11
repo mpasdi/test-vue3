@@ -38,6 +38,10 @@
     <div>custom_weakmap : {{ custom_weakmap }}</div>
     <div>custom_set : {{ custom_set }}</div>
     <div>custom_weakset : {{ custom_weakset }}</div>
+
+    <h2>symbol</h2>
+    <div>symbol: {{ sbl }}</div>
+    <div>symbol: {{ sbl2 }}</div>
   </div>
 </template>
 
@@ -215,6 +219,23 @@
     console.log('lsm------custom_set', custom_set)
     console.log('lsm------custom_weakset', custom_weakset)
   }, 2000)
+
+  // symbol
+  const sbl = Symbol()
+  const sbl2 = Symbol('name')
+  const sbl_obj = {
+    [sbl]: 'one',
+    [sbl2]: 'two',
+    three: 'four'
+  }
+  sbl_obj[sbl] = 'five'
+  console.group('lsm------symbol start')
+  console.log('lsm------- common -key ', Object.keys(sbl_obj), Object.values(sbl_obj))
+  console.log('lsm----sbl - key', Object.getOwnPropertySymbols(sbl_obj))
+  console.log('lsm---- reflect own key', Reflect.ownKeys(sbl_obj))
+  console.log('lsm-----sbl sbl2 ', sbl, sbl2)
+  console.log('lsm------sbl_obj', sbl_obj)
+  console.groupEnd()
 </script>
 
 <style scoped lang="less">
