@@ -30,6 +30,11 @@
     <div class="unit-rem">rem</div>
     <div class="unit-em">em</div>
     <div class="unit-vhw">vh vw</div>
+
+    <div>css 垂直居中方式</div>
+    <div v-for="item in 4" :key="item" :class="['center-wrap' + item]">
+      <div class="wrap-item">1</div>
+    </div>
   </div>
 </template>
 
@@ -54,7 +59,7 @@
 
     &_item {
       width: 30%;
-      // height: 40px;
+      //height: 40px;
       border: 2px solid wheat;
       flex: 0 0 30%;
       // align-self: flex-start;
@@ -163,5 +168,42 @@
     width: 10vw;
     height: 10vh;
     border: 1px solid indianred;
+  }
+
+  .center-wrap(@color) {
+    .custom-box(@color);
+    border: 1px solid @color;
+    .wrap-item {
+      width: 30px;
+      height: 30px;
+      border: 1px solid @color;
+    }
+  }
+  .center-wrap1 {
+    .center-wrap(red);
+    display: flex;
+    //align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .center-wrap2 {
+    .center-wrap(blue);
+    position: relative;
+    .wrap-item {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .center-wrap3 {
+    .center-wrap(#2dd9da);
+    display: grid;
+    justify-content: center;
+    //align-content: center;
+    align-items: center;
   }
 </style>
