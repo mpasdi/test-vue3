@@ -44,7 +44,8 @@
     const res3 = await thenAwaitFunc()
     console.log('lsm-----res3', res3)
 
-    forPromise()
+    await forPromise()
+    macroMicroTask()
   })
   function getPromise() {
     return new Promise((res, rej) => {
@@ -198,6 +199,40 @@
     }
     console.groupEnd()
   }
+
+  // promise 宏任务和微任务
+  function macroMicroTask() {
+    console.group('lsm-----  step')
+    console.log('lsm----step 1')
+    new Promise((resolve) => {
+      console.log('lsm------step 2')
+      setTimeout(() => {
+        console.log('lsm-------step 3')
+        resolve()
+        console.log('lsm-------step 4')
+      }, 1000)
+      console.log('lsm-------step 5')
+    })
+
+    console.log('lsm-------step 6')
+    setTimeout(() => {
+      console.log('lsm-------step 7')
+      Promise.resolve().then(() => {
+        console.log('lsm-------step 8')
+        setTimeout(() => {
+          console.log('lsm-------step 9')
+        }, 1000)
+        console.log('lsm-------step 10')
+      })
+      console.log('lsm-------step 11')
+    }, 1000)
+    console.log('lsm-------step 12')
+
+    console.groupEnd()
+  }
+
+  //1 2 5 6 12 3 4 7 11 8 9 10
+  //
 </script>
 
 <style scoped></style>
