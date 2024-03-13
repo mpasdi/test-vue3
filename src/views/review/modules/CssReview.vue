@@ -31,10 +31,16 @@
     <div class="unit-em">em</div>
     <div class="unit-vhw">vh vw</div>
 
-    <div>css 垂直居中方式</div>
+    <h2>css 垂直居中方式</h2>
     <div v-for="item in 4" :key="item" :class="['center-wrap' + item]">
       <div class="wrap-item">1</div>
     </div>
+  </div>
+
+  <h2>css 块级格式化上下文</h2>
+  <div class="block-context">
+    <div class="block-context_item"></div>
+    <div class="block-context_item"></div>
   </div>
 </template>
 
@@ -205,5 +211,25 @@
     justify-content: center;
     //align-content: center;
     align-items: center;
+  }
+
+  .block-context {
+    box-sizing: content-box;
+    width: 500px;
+    // height: 200px;
+    border: 1px solid greenyellow;
+    // overflow: auto; //hidden, auto scroll
+    display: inline-block; //  inline-block table
+    // position: fixed; //absolute fixed
+    // float: left; //left right
+    padding: 10px;
+    &_item {
+      width: 50px;
+      height: 50px;
+      border: 1px solid saddlebrown;
+      margin: 10px;
+      // float: right;
+      position: absolute;
+    }
   }
 </style>
