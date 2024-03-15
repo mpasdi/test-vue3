@@ -7,12 +7,12 @@
 <template>
   <div class="css-review">
     <h1>css 复习</h1>
-    <h2>flex 布局</h2>
+    <h2>1. flex 布局</h2>
     <div class="css-flex">
       <div class="css-flex_item" v-for="item in 4" :key="item">{{ item }}</div>
     </div>
 
-    <h2>gird 布局</h2>
+    <h2>2. gird 布局</h2>
     <div class="css-grid">
       <div class="css-grid_item" v-for="item in 7" :key="item">{{ item }}</div>
     </div>
@@ -20,27 +20,32 @@
       <div class="css-grid-area_item" v-for="item in 4" :key="item">{{ item }}</div>
     </div>
 
-    <h2>盒模型</h2>
+    <h2>3. 盒模型</h2>
     <div class="standard-box">1</div>
     <div class="wired-box">2</div>
 
-    <h2>css 中的各种单位</h2>
+    <h2>4. css 中的各种单位</h2>
     <div class="unit-px">px</div>
     <div class="unit-bai">%</div>
     <div class="unit-rem">rem</div>
     <div class="unit-em">em</div>
     <div class="unit-vhw">vh vw</div>
 
-    <h2>css 垂直居中方式</h2>
+    <h2>5. css 垂直居中方式</h2>
     <div v-for="item in 4" :key="item" :class="['center-wrap' + item]">
       <div class="wrap-item">1</div>
     </div>
-  </div>
 
-  <h2>css 块级格式化上下文</h2>
-  <div class="block-context">
-    <div class="block-context_item"></div>
-    <div class="block-context_item"></div>
+    <h2>6. css 块级格式化上下文</h2>
+    <div class="block-context">
+      <div class="block-context_item" v-for="item in 10" :key="item"></div>
+    </div>
+
+    <h2>7. 清除浮动</h2>
+    <div class="float-context">
+      <div class="float-context_item"></div>
+      <div class="float-context_item1">212</div>
+    </div>
   </div>
 </template>
 
@@ -228,8 +233,40 @@
       height: 50px;
       border: 1px solid saddlebrown;
       margin: 10px;
-      // float: right;
-      position: absolute;
+      float: left;
+      // position: absolute;
+      overflow: hidden;
     }
   }
+
+  .float-context {
+    width: 200px;
+    border: 1px solid orange;
+    // display: inline-block;  // 方式一: 块级格式化上下文
+    &_item {
+      width: 50px;
+      height: 50px;
+      border: 1px solid blueviolet;
+      float: left;
+    }
+
+    // 方式二
+    &_item1 {
+      width: 50px;
+      height: 50px;
+      background-color: olive;
+      // overflow: hidden;
+    }
+
+    // 方式三
+    // &_item1 {
+    //   clear: both;
+    // }
+  }
+  // 方式四
+  // .float-context::after {
+  //   display: grid; // block table flex grid
+  //   content: '';
+  //   clear: both;
+  // }
 </style>
