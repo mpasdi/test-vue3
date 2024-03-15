@@ -79,6 +79,14 @@ export const Background: RouteRecordRaw[] = [
         meta: {
           title: 'es 测试'
         }
+      },
+      {
+        path: 'requestTest',
+        name: 'RequestTest',
+        component: () => import('@/views/background/modules/RequestTest.vue'),
+        meta: {
+          title: '请求 测试'
+        }
       }
     ]
   }

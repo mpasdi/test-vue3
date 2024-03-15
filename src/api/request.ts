@@ -19,8 +19,11 @@ request.interceptors.request.use((config) => {
   return config
 })
 
-request.interceptors.response.use((config) => {
-  return config
+request.interceptors.response.use((resp) => {
+  if (resp.status === 200) {
+    return resp.data
+  }
+  return resp
 })
 
 export default request

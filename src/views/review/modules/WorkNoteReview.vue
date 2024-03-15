@@ -101,7 +101,7 @@
   const fileUrl1 = ref('')
   async function getImage() {
     const res = await getImageData()
-    if (!res.data) return
+    if (!res) return
     handBlobByFileReader(res.data)
     handBlobByURI(res.data)
   }
