@@ -208,7 +208,7 @@
       console.log('lsm------step 2')
       setTimeout(() => {
         console.log('lsm-------step 3')
-        resolve()
+        resolve('')
         console.log('lsm-------step 4')
       }, 1000)
       console.log('lsm-------step 5')

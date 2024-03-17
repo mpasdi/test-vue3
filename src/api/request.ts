@@ -8,7 +8,8 @@ import axios from 'axios'
 import { ContentTypeEnum } from '@/utils/enums'
 
 const request = axios.create({
-  baseURL: '/api',
+  // baseURL: '/api',
+  baseURL: 'http://localhost:9332',
   timeout: 10000,
   headers: {
     'Content-Type': ContentTypeEnum.JSON
@@ -19,7 +20,7 @@ request.interceptors.request.use((config) => {
   return config
 })
 
-request.interceptors.response.use((resp) => {
+request.interceptors.response.use((resp): any => {
   if (resp.status === 200) {
     return resp.data
   }

@@ -45,7 +45,7 @@
     [sbl]: 'sbl_value'
   }
   const es7_arr = ['other', sbl]
-  const es7_map = new Map([
+  const es7_map = new Map<any, any>([
     ['age', 12],
     [sbl, 'sbl_value']
   ])
