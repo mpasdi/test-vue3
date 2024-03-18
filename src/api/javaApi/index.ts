@@ -1,3 +1,9 @@
+/*
+ * @Author: lisongming
+ * @Date: 2024-03-18 10:10:52
+ * @LastEditors: lisongming
+ * @Description: 描述
+ */
 import request from '@/api/request'
 
 enum JAVA_API {

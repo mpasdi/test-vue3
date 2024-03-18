@@ -15,6 +15,9 @@
     <div v-for="item in javaUserList" :key="item.id">
       {{ item?.userName }} --- {{ item?.userAge }}
     </div>
+
+    <h2>express static 静态代理测试</h2>
+    <img width="200" src="http://localhost:9332/images/lover.jpg" alt="express.static" />
   </div>
 </template>
 

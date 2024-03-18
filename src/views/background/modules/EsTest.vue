@@ -7,6 +7,7 @@
 <template>
   <div>
     <h1>es7~es_latest测试</h1>
+
     <h2>es7 测试</h2>
     <div>1.指数运算符 **： {{ 2 ** 3 }}</div>
     <div>2. async await</div>
@@ -33,6 +34,11 @@
       <br />
       {{ Object.getOwnPropertyDescriptors(es7_map) }}
     </div>
+
+    <h2>es8 测试</h2>
+    <div>async await : {{ asyncFun().then((res) => res) }}</div>
+    <div>padStart padEnd: {{ padStr.padStart(15, '-*~') }} : {{ padStr.padEnd(10, '!!') }}</div>
+    <div>SharedArrayBuffer Atomics 只能在web workers或者 Service Workers中使用</div>
   </div>
 </template>
 
@@ -75,6 +81,23 @@
   console.groupEnd()
 
   const flat_arr = [[[121, 'lsm'], 316, 212], 43, 453]
+
+  // es 8
+
+  // 8 - async
+  async function asyncFun() {
+    return Promise.resolve('111')
+    // return 212
+  }
+
+  // 8 - padStart padEnd
+  const padStr = 'lsm'
+
+  // const sab = new SharedArrayBuffer(1024)
+  // const i32a = new Int32Array(sab)
+
+  // const originVal = Atomics.add(i32a, 0, 'a')
+  // console.log('lsm----originVal', originVal)
 </script>
 
 <style scoped lang="less"></style>
