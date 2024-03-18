@@ -7,11 +7,16 @@
 import request from '../request'
 
 enum API_NAME {
-  GET_USER_LIST = '/getUserList'
+  GET_USER_LIST = '/getUserList',
+  GET_USER_BY_ID = '/getUserListById'
 }
 
 function getUserList() {
   return request.get(API_NAME.GET_USER_LIST)
 }
 
-export { getUserList }
+function getUserById(data: { id: number }) {
+  return request.post(API_NAME.GET_USER_BY_ID, data)
+}
+
+export { getUserList, getUserById }

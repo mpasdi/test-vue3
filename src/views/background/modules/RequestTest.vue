@@ -18,22 +18,27 @@
 
     <h2>express static 静态代理测试</h2>
     <img width="200" src="http://localhost:9332/images/lover.jpg" alt="express.static" />
+
+    <h2>getUserById</h2>
+    <div>{{ singleUser }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref, onBeforeMount } from 'vue'
-  import { getUserList } from '@/api/expressApi'
+  import { getUserById, getUserList } from '@/api/expressApi'
   import { javaGetUserList } from '@/api/javaApi'
 
   // vue api
   onBeforeMount(() => {
     queryUserList()
     queryJavaUserList()
+    getSingleUser()
   })
 
   const userList = ref<Array<any>>([])
   const javaUserList = ref<Array<any>>([])
+  const singleUser = ref<any>({})
 
   async function queryUserList() {
     const res = await getUserList()
@@ -44,6 +49,13 @@
     const res = await javaGetUserList()
     console.log('lsm----java res', res)
     javaUserList.value = res.data
+  }
+
+  async function getSingleUser() {
+    const params = { id: 1 }
+    const res = await getUserById(params)
+    console.log('lsm----res single', res)
+    singleUser.value = res
   }
 </script>
 
