@@ -39,10 +39,17 @@
     <div>async await : {{ asyncFun().then((res) => res) }}</div>
     <div>padStart padEnd: {{ padStr.padStart(15, '-*~') }} : {{ padStr.padEnd(10, '!!') }}</div>
     <div>SharedArrayBuffer Atomics 只能在web workers或者 Service Workers中使用</div>
+
+    <h2>es9 测试</h2>
+    <div>
+      spread/rest: {{ { ...es9Obj } }} -- {{ es9Obj[es9Sbl] }} ： {{ weather }} --- {{ restObj }}
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+  // import { reactive } from 'vue'
+
   // 1. es7
   const sbl = Symbol('key')
   const es7_obj = {
@@ -98,6 +105,69 @@
 
   // const originVal = Atomics.add(i32a, 0, 'a')
   // console.log('lsm----originVal', originVal)
+
+  // es 9
+  console.group('lsm-----es9')
+  const es9Sbl = Symbol('es9Key')
+  const es9Obj = {
+    weather: 'wind',
+    temperature: 18,
+    address: '上海',
+    [es9Sbl]: 'symbol'
+  }
+  Object.defineProperty(es9Obj, 'date', {
+    value: new Date().toLocaleString(),
+    enumerable: true
+  })
+  console.log('lsm-----es9obj', es9Obj)
+  console.log('lsm-----spread', { ...es9Obj })
+  console.log('lsm-- get Description', Object.getOwnPropertyDescriptors(es9Obj))
+  const { weather, ...restObj } = es9Obj
+
+  console.log('--------------异步迭代-------------')
+  const itArr = [112, 32, 43, 54]
+  const arrIterator = itArr[Symbol.iterator]()
+  let arrItem = arrIterator.next()
+  while (!arrItem.done) {
+    console.log('lsm----arr item value', arrItem)
+    arrItem = arrIterator.next()
+  }
+  console.log('lsm----arr item end1', arrItem)
+  console.log('lsm----arr item end2', arrIterator.next())
+
+  const itObj = {
+    weather: 'wind',
+    temperature: 18,
+    address: '上海',
+    [Symbol.iterator]: () => {
+      let index = 0
+      let keys = Object.keys(itObj)
+      return {
+        next: () => {
+          return {
+            value: itObj[keys[index++]],
+            done: index > keys.length
+          }
+        }
+      }
+    }
+    // [Symbol.iterator]: function* () { // setup 不支持yield
+    //   Object.keys(this).map((item) => {
+    //     yield this[item]
+    //   })
+    // }
+  }
+  const objIterator = itObj[Symbol.iterator]()
+  let objItem = objIterator.next()
+  while (!objItem.done) {
+    console.log('lsm----obj item value', objItem)
+    objItem = objIterator.next()
+  }
+  console.log('lsm----objItem end', objItem)
+  for (const iterator of itObj) {
+    console.log('lsm----for of if', iterator)
+  }
+  console.groupEnd()
 </script>
 
 <style scoped lang="less"></style>
