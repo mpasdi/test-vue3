@@ -48,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+  import '../tss/iterator'
   // import { reactive } from 'vue'
 
   // 1. es7
