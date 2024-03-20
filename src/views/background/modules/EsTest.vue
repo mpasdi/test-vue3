@@ -44,12 +44,38 @@
     <div>
       spread/rest: {{ { ...es9Obj } }} -- {{ es9Obj[es9Sbl] }} ： {{ weather }} --- {{ restObj }}
     </div>
+    <div>iterator/asyncIterator</div>
+    <div>Promise.prototype.finally</div>
+
+    <h2>es 10 测试</h2>
+    <div>
+      trimStart/trimEnd : {{ trimStr }} --- {{ trimStr.trimStart() }} ---{{ trimStr.trimEnd() }}
+    </div>
+    <div>
+      fromEntries(map/arr) : {{ transArr }} ------- {{ Object.fromEntries(transArr) }} -----
+      {{ Object.fromEntries(transMap) }}
+    </div>
+    <div>try {} catch {}</div>
+    <div>Symbol.description</div>
+
+    <h2>es 11 (2020)</h2>
+    <div>??/?. : {{ unVal }} ---- {{ unValue ?? '--' }}</div>
+    <div>
+      import ::
+      <img :src="dynamicImportImg" alt="dy" srcset="" />
+    </div>
+    <div>
+      BigInt :: {{ generalNum === bigNum }} --- {{ generalNum == bigNum }} ---
+      {{ generalNum > bigNum }} - -- {{ generalNum < bigNum }} --{{ BigInt(generalNum) + bigNum }}
+    </div>
+    <div>Promise.allSettled</div>
+    <div>globalThis</div>
   </div>
 </template>
 
 <script setup lang="ts">
   import '../tss/iterator'
-  // import { reactive } from 'vue'
+  import { ref } from 'vue'
 
   // 1. es7
   const sbl = Symbol('key')
@@ -169,6 +195,71 @@
     console.log('lsm----for of if', iterator)
   }
   console.groupEnd()
+
+  const finallyArr = [Promise.resolve(1), Promise.reject(2)]
+  Promise.all(finallyArr)
+    .then((res) => {
+      console.log('lsm---------finally', res)
+    })
+    .catch((err) => {
+      console.log('lsm---------finally', err)
+    })
+    .finally(() => {
+      console.log('lsm---------finally', 3)
+    })
+
+  // es 10 2019
+  const transSymbolKey = Symbol('symbol key')
+  const transObjKey = {}
+  const trimStr = '  12 lsm  '
+  const transArr = [
+    ['name', 'lsm'],
+    [1, 25],
+    [transSymbolKey, 'unique value'],
+    [transObjKey, 'test']
+  ]
+  const transMap = new Map(transArr)
+  console.log('lsm-----entries obj', Object.fromEntries(transArr))
+
+  try {
+    throw new Error('error')
+  } catch {
+    console.log('lsm----error')
+  }
+  const sblTest = Symbol('sbl-test')
+  console.log('lsm-----sblTest', sblTest, sblTest.description)
+  const sblTest1 = Symbol.for('sbl-test1')
+  console.log('lsm-----sblTest1', sblTest1)
+  const sblTest2 = Symbol.keyFor(sblTest1)
+  console.log('lsm-----sblTest2', sblTest2)
+  const sblTest3 = Symbol.for('sbl-test1')
+  console.log('lsm-----sbl equal', sblTest1 === sblTest3)
+  console.log('lsm----sbl key for', Symbol.keyFor(sblTest3), sblTest)
+
+  // es 11 2020
+  const unValue = undefined
+  const unVal = unValue?.map((item) => item)
+  const dynamicImportImg = ref('')
+  async function getUrl() {
+    const module = await import('@/assets/icons/icon17.png')
+    dynamicImportImg.value = module.default
+    console.log('lsm----imgUrl.value', dynamicImportImg.value)
+  }
+  getUrl()
+
+  const settledArr = [Promise.resolve('success'), Promise.reject('error')]
+  Promise.allSettled(settledArr).then((res) => {
+    console.log('lsm------ all settled promise', res)
+  })
+
+  const generalNum = 121
+  const bigNum = BigInt(121)
+
+  globalThis.custom_memory = new Set()
+  function testFunc() {
+    console.log('lsm----globalThis.custom_memory', globalThis.custom_memory)
+  }
+  testFunc()
 </script>
 
 <style scoped lang="less"></style>

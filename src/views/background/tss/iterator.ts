@@ -26,7 +26,8 @@ const geObj = {
   }
 }
 // geObj.__proto__.test = 'test'
-Object.getPrototypeOf(geObj).test = 'second test'
+// Object.getPrototypeOf(geObj).test = 'second test'
+
 // const geObIterator = geObj[Symbol.iterator]()
 // console.log(geObIterator.next())
 // console.log(geObIterator.next())
@@ -84,19 +85,43 @@ const asyncObjIterator = asyncObj[Symbol.asyncIterator]()
 //   }
 // })()
 
-let asyncArr = [31, 53, 6, 47, 232, 8, 5352]
+const asyncArr = [31, 53, 6, 47, 232, 8, 5352]
 asyncArr[Symbol.asyncIterator] = async function* () {
   for (const asyncArrItem of asyncArr) {
-    yield asyncArrItem
+    yield asyncArrItem + 1
   }
 }
-const asyncArrIterator = asyncArr[Symbol.asyncIterator]()
-console.log('lsm-----next ', asyncArrIterator.next())
+// const asyncArrIterator = asyncArr[Symbol.asyncIterator]()
+// console.log('lsm-----next ', asyncArrIterator.next())
+;(async () => {
+  for await (const asyncArrElement of asyncArr) {
+    console.log('lsm----async arr item ', asyncArrElement)
+  }
+})()
 
-// ;(async () => {
-//   for await (const asyncArrElement of asyncArr) {
-//     console.log('lsm----async arr item ', asyncArrElement)
-//   }
-// })()
+// const asyncItArr = new Array(4).fill(0).map((_, index) => Promise.resolve(index))
+const asyncItArr = new Array(4).fill(0).map((_, index) => index)
+
+async function* itFunc() {
+  for (const itArrItem of asyncItArr) {
+    yield await itArrItem
+  }
+}
+
+// const itFuncIt = itFunc()
+// console.log('lsm-----itfunIt', itFuncIt.next())
+;(async () => {
+  for await (const ifFunItem of itFunc()) {
+    console.log('lsm----itfunIt1', ifFunItem)
+  }
+})()
+// --
+;(() => {
+  for (const ifFunItem of asyncItArr) {
+    console.log('lsm----itfunIt', ifFunItem)
+  }
+})()
+
+console.log('lsm-----custom_memory', globalThis.custom_memory)
 
 console.groupEnd()
