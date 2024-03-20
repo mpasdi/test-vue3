@@ -65,11 +65,24 @@
       <img :src="dynamicImportImg" alt="dy" srcset="" />
     </div>
     <div>
-      BigInt :: {{ generalNum === bigNum }} --- {{ generalNum == bigNum }} ---
-      {{ generalNum > bigNum }} - -- {{ generalNum < bigNum }} --{{ BigInt(generalNum) + bigNum }}
+      BigInt ::
+      <!--      {{ generalNum === bigNum }} -&#45;&#45; {{ generalNum == bigNum }}-->
+      --- {{ generalNum > bigNum }} - -- {{ generalNum < bigNum }} --{{
+        BigInt(generalNum) + bigNum
+      }}
     </div>
     <div>Promise.allSettled</div>
     <div>globalThis</div>
+
+    <h2>es 12 2021</h2>
+    <div>Promise.any</div>
+    <div>number _ :: {{ specialNunber }}</div>
+    <div>replaceAll :: {{ repStr.replaceAll('lsm', 'other') }} | {{ repStr }}</div>
+    <div>
+      ||= ??= &&= : {{ (operatorOne ||= 2) }} ----- {{ (operatorOne &&= 3) }} -----
+      {{ (operatorOne ??= 4) }}
+    </div>
+    <div>WeakRef: {{ weakObj }}</div>
   </div>
 </template>
 
@@ -212,7 +225,7 @@
   const transSymbolKey = Symbol('symbol key')
   const transObjKey = {}
   const trimStr = '  12 lsm  '
-  const transArr = [
+  const transArr: any = [
     ['name', 'lsm'],
     [1, 25],
     [transSymbolKey, 'unique value'],
@@ -233,7 +246,7 @@
   const sblTest2 = Symbol.keyFor(sblTest1)
   console.log('lsm-----sblTest2', sblTest2)
   const sblTest3 = Symbol.for('sbl-test1')
-  console.log('lsm-----sbl equal', sblTest1 === sblTest3)
+  // console.log('lsm-----sbl equal', sblTest1 === sblTest3)
   console.log('lsm----sbl key for', Symbol.keyFor(sblTest3), sblTest)
 
   // es 11 2020
@@ -260,6 +273,28 @@
     console.log('lsm----globalThis.custom_memory', globalThis.custom_memory)
   }
   testFunc()
+
+  //   es 12 2021
+  const repStr = 'lsm like a girl, but the girl , i feel she don`t like lsm '
+  const specialNunber = 1_000_000_000
+  let promiseAnyArr = [Promise.reject('1'), Promise.reject(2)]
+  Promise.any(promiseAnyArr)
+    .then((res) => {
+      console.log('lsm---------any res', res)
+    })
+    .catch((err) => {
+      console.log('lsm-----any err', err)
+    })
+
+  const weakTestObj = {
+    test: 'test'
+  }
+  const weakObj = new WeakRef(weakTestObj)
+  console.log('lsm----weakObj', weakObj.deref())
+  setTimeout(() => {
+    console.log('lsm----weakObj set time', weakObj.deref())
+  }, 1000)
+  let operatorOne = 0
 </script>
 
 <style scoped lang="less"></style>
