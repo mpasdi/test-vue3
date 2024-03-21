@@ -7,107 +7,107 @@
 import { unref, onMounted } from 'vue'
 // types
 import { Ref } from 'vue'
-function useMedium(canvasEle: Ref<HTMLCanvasElement>) {
-  let ctx = null
-  const mediumAttr = {
-    preBrightnessUpdate: 0,
-    preContractUpdate: 0,
-    preSaturationUpdate: 0
-  }
+function useMedium(eleRef: Ref<HTMLVideoElement | HTMLImageElement>) {
+  let ctxAttrMap: Map<string, number> = new Map<string, number>()
 
   onMounted(() => {
-    initCanvas()
+    // initCanvas()
+    setMedium()
   })
 
-  function initCanvas() {
-    const canvasEleRaw = unref(canvasEle)
-    if (!(canvasEleRaw && canvasEle)) return
-    ctx ||= canvasEleRaw.getContext('2d')
+  // function initCanvas() {
+  //   const canvasEleRaw = unref(canvasEle)
+  //   if (!(canvasEleRaw && canvasEle)) return
+  //   ctx ||= canvasEleRaw.getContext('2d')
+  // }
+
+  function initCtxAttrMap() {
+    ctxAttrMap.set('brightness', 100)
+    ctxAttrMap.set('contrast', 100)
+    ctxAttrMap.set('saturate', 100)
   }
 
   // TODO: 需要对String 进行URL校验
-  async function setMedium(source: Blob | String) {
-    let mediumSource
-
-    // TODO: 待测试
-    if (source instanceof Blob) {
-      mediumSource ||= URL.createObjectURL(Blob)
-    }
-    // TODO : 考虑视频
-    const img = new Image()
-    img.src = source
-    img.onload = function () {
-      mediumSource = img
-      ctx.drawImage(mediumSource, 0, 0, img.width, img.height, 0, 0, img.width / 5, img.height / 5)
+  // async function setMedium(source: Blob | string) {
+  //   let mediumSource: string
+  //
+  //   // TODO: 待测试
+  //   if (source instanceof Blob) {
+  //     mediumSource ||= URL.createObjectURL(source)
+  //   } else {
+  //     mediumSource = source
+  //   }
+  //
+  //   // TODO : 考虑视频
+  //   img.src = mediumSource
+  //   img.onload = function () {
+  //     initCtxAttrMap()
+  //     drawMedium()
+  //   }
+  // }
+  async function setMedium() {
+    const mediumEle = unref(eleRef)
+    console.log('lsm----inner mediumEle', mediumEle)
+    if (mediumEle instanceof HTMLImageElement) {
+      drawMedium()
+    } else {
+      drawVideo()
     }
   }
 
-  function updateBrightness(value: number = 5) {
-    console.log('lsm----updateBrightness', value)
-    const mediumData = ctx.getImageData(0, 0, 300, 150)
-    const mediumDataArr = mediumData.data || []
-
-    for (let i = 0; i < mediumDataArr.length; i += 4) {
-      mediumDataArr[i] -= mediumAttr.preBrightnessUpdate
-      mediumDataArr[i] += value // 调整亮度
+  function drawMedium() {
+    let filterStr = ''
+    for (const ctxAttrMapElement of ctxAttrMap) {
+      filterStr += ctxAttrMapElement[0] + `(${ctxAttrMapElement[1]}%) `
     }
-    ctx.putImageData(mediumData, 0, 0)
-    mediumAttr.preBrightnessUpdate = value
+    console.log('lsm----inner', filterStr)
+    const mediumEle = unref(eleRef)
+    mediumEle.style.filter = filterStr
   }
 
-  function updateContrast(value: number = 5) {
-    const mediumData = ctx.getImageData(0, 0, 300, 150)
-    const mediumDataArr = mediumData.data || []
-    for (let i = 0; i < mediumDataArr.length; i += 4) {
-      const avg = (mediumDataArr[i] + mediumDataArr[i + 1] + mediumDataArr[i + 2]) / 3
-      // const preContractUpdate = mediumAttr.preContractUpdate
-      if (avg > 127) {
-        // value = +value
-        // mediumDataArr[i] -= preContractUpdate
-        // mediumDataArr[i + 1] -= preContractUpdate
-        // mediumDataArr[i + 2] -= preContractUpdate
+  function drawVideo() {
+    const mediumEle = unref(eleRef)
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
 
-        mediumDataArr[i] += value
-        mediumDataArr[i + 1] += value
-        mediumDataArr[i + 2] += value
-      } else {
-        // mediumDataArr[i] += preContractUpdate
-        // mediumDataArr[i + 1] += preContractUpdate
-        // mediumDataArr[i + 2] += preContractUpdate
-        // value = -value
-        mediumDataArr[i] -= value
-        mediumDataArr[i + 1] -= value
-        mediumDataArr[i + 2] -= value
+    let id = requestAnimationFrame(function draw() {
+      ctx.drawImage(mediumEle, 0, 0, canvas.width, canvas.height)
+
+      let filterStr = ''
+      for (const ctxAttrMapElement of ctxAttrMap) {
+        filterStr += ctxAttrMapElement[0] + `(${ctxAttrMapElement[1]}%) `
       }
 
-      // const preContractUpdate = mediumAttr.preContractUpdate
-      // mediumDataArr[i] -= preContractUpdate
-      // mediumDataArr[i + 1] -= preContractUpdate
-      // mediumDataArr[i + 2] -= preContractUpdate
+      ctx.filter = filterStr
+      ctx.drawImage(mediumEle, 0, 0, canvas.width, canvas.height)
+      id = requestAnimationFrame(draw)
+    })
 
-      // mediumDataArr[i] += value
-      // mediumDataArr[i + 1] += value
-      // mediumDataArr[i + 2] += value
-    }
-    ctx.putImageData(mediumData, 0, 0)
-    mediumAttr.preContractUpdate = value
+    // mediumEle.addEventListener('pause', function () {
+    //   cancelAnimationFrame(id)
+    // })
+  }
+  function updateBrightness(value: number = 100) {
+    ctxAttrMap.set('brightness', value)
+    drawMedium()
   }
 
-  function updateSaturation(value: number = 5) {
-    const mediumData = ctx.getImageData(0, 0, 300, 150)
-    const mediumDataArr = mediumData.data || []
-
-    for (let i = 0; i < mediumDataArr.length; i += 4) {
-      const avg = (mediumDataArr[i] + mediumDataArr[i + 1] + mediumDataArr[i + 2]) / 3
-      mediumDataArr[i] += (value * (mediumDataArr[i] - avg)) / 255 // 调整饱和度
-      mediumDataArr[i + 1] += (value * (mediumDataArr[i + 1] - avg)) / 255
-      mediumDataArr[i + 2] += (value * (mediumDataArr[i + 2] - avg)) / 255
-    }
-
-    ctx.putImageData(mediumData, 0, 0)
+  function updateContrast(value: number = 100) {
+    ctxAttrMap.set('contrast', value)
+    drawMedium()
   }
 
-  return { setMedium, updateBrightness, updateContrast, updateSaturation }
+  function updateSaturation(value: number = 100) {
+    ctxAttrMap.set('saturate', value)
+    drawMedium()
+  }
+
+  function resetMediumAttr() {
+    initCtxAttrMap()
+    drawMedium()
+  }
+
+  return { setMedium, updateBrightness, updateContrast, updateSaturation, resetMediumAttr }
 }
 
 export { useMedium }
