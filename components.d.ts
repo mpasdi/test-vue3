@@ -11,6 +11,7 @@ declare module 'vue' {
     ACarousel: typeof import('ant-design-vue/es')['Carousel']
     AInput: typeof import('ant-design-vue/es')['Input']
     ARangePicker: typeof import('ant-design-vue/es')['RangePicker']
+    ASlider: typeof import('ant-design-vue/es')['Slider']
     ATable: typeof import('ant-design-vue/es')['Table']
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
