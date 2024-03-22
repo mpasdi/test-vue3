@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     AButton: typeof import('ant-design-vue/es')['Button']
     ASlider: typeof import('ant-design-vue/es')['Slider']
+    ATabPane: typeof import('ant-design-vue/es')['TabPane']
+    ATabs: typeof import('ant-design-vue/es')['Tabs']
     EchartRadar: typeof import('./src/components/echarts/EchartRadar.vue')['default']
     EchartsBar: typeof import('./src/components/echarts/EchartsBar.vue')['default']
     EchartsBing: typeof import('./src/components/echarts/EchartsBing.vue')['default']

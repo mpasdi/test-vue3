@@ -10,7 +10,9 @@
 
     <h2>图像处理（亮度对比度， 饱和度）</h2>
     <div class="medium"><img src="@/assets/images/autumn.jpg" alt="" ref="imgRef" /></div>
-    <div class="medium"><video src="@/assets/videos/v-3.mp4" controls ref="videoRef"></video></div>
+    <div class="medium" ref="mediumWrap">
+      <video src="@/assets/videos/v-3.mp4" controls ref="videoRef"></video>
+    </div>
     <!--    <canvas ref="canvasEle" class="canvas_ele"></canvas>-->
     <div>
       亮度
@@ -49,15 +51,11 @@
   import { useMedium } from '@/hooks/useMedium'
   import { debounce } from '@/utils/toolMethods'
 
-  const canvasEle = ref()
   const imgRef = ref()
   const videoRef = ref()
-  const { setMedium, updateBrightness, updateContrast, updateSaturation, resetMediumAttr } =
-    useMedium(videoRef)
-  // setMedium(
-  //   // 'https://copyright.bdstatic.com/vcg/creative/cc9c744cf9f7c864889c563cbdeddce6.jpg@h_1280'
-  //   '/src/assets/images/autumn.jpg'
-  // )
+  const mediumWrap = ref()
+  const { updateBrightness, updateContrast, updateSaturation, resetMediumAttr } =
+    useMedium(mediumWrap)
 
   const mediumAttr = reactive({
     brightness: 100,
