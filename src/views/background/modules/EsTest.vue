@@ -52,7 +52,7 @@
       trimStart/trimEnd : {{ trimStr }} --- {{ trimStr.trimStart() }} ---{{ trimStr.trimEnd() }}
     </div>
     <div>
-      fromEntries(map/arr) : {{ transArr }} ------- {{ Object.fromEntries(transArr) }} -----
+      fromEntries(map/arr) : {{ transArr }} ------- {{ Object.fromEntries(transArr as any) }} -----
       {{ Object.fromEntries(transMap) }}
     </div>
     <div>try {} catch {}</div>
@@ -83,6 +83,23 @@
       {{ (operatorOne ??= 4) }}
     </div>
     <div>WeakRef: {{ weakObj }}</div>
+
+    <h2>es 13 2022</h2>
+    <div>top await: {{ topAwait }}</div>
+    <div>at : {{ atArr.at(-1) }}</div>
+    <div>
+      lastFind, lastFinedIndex : {{ atArr.findLastIndex((item) => item == 'last value') }} :
+      {{ atArr.findLast((item) => item == 'last value') }}
+    </div>
+    <div>error.cause</div>
+    <div>class 新特性</div>
+
+    <h2>es 14 2023</h2>
+    <div>toReversed: {{ es14Arr.toReversed() }}</div>
+    <div>toSorted: {{ es14Arr.toSorted() }}</div>
+    <div>toSpliced: {{ es14Arr.toSpliced(0, 3, 100, 200) }}</div>
+    <div>with: {{ es14Arr.with(0, 300) }}</div>
+    <div>origin arr: {{ es14Arr }}</div>
   </div>
 </template>
 
@@ -295,6 +312,21 @@
     console.log('lsm----weakObj set time', weakObj.deref())
   }, 1000)
   let operatorOne = 0
+
+  //   es 2022
+  const atArr = ['313', 31, 53, 7, 542, 'last value']
+  try {
+    throw new Error('error', { cause: 'error test' })
+  } catch (err) {
+    console.log('lsm-----try catch error', err)
+  }
+
+  // es 2023
+  const es14Arr = [5, 4, 3, 2, 1]
+</script>
+<script lang="ts">
+  const topAwait = await Promise.resolve('top Await')
+  console.log('lsm-----top await', topAwait)
 </script>
 
 <style scoped lang="less"></style>
