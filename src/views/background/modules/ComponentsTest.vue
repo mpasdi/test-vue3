@@ -69,6 +69,9 @@
         </div>
       </a-carousel>
     </div> -->
+
+    <h2>5. leaLeft测试</h2>
+    <LeaLeft />
   </div>
 </template>
 
@@ -76,6 +79,7 @@
   import { onMounted, ref, unref, onUnmounted } from 'vue'
   import { Dayjs } from 'dayjs'
   import * as echarts from 'echarts'
+  import LeaLeft from '../components/LeaLeft.vue'
 
   // import EchartsLine from '@/components/echarts/EchartsLine.vue'
   // import EchartsBar from '@/components/echarts/EchartsBar.vue'
