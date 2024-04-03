@@ -45,6 +45,10 @@
       <a-button @click="resetState">重置state</a-button>
       <a-button @click="batchUpdateState">批量更改state</a-button>
     </div>
+    <h3>测试：getters中使用session 会导致的数据不同步问题</h3>
+    <button @click="setSession">设置session info</button>
+    <div>sessionInfo :{{ userStore.sessionInfo }}</div>
+    <div>getSessionInfo :{{ userStore.getSessionInfo }}</div>
   </div>
 </template>
 
@@ -150,6 +154,14 @@
   userStore.$subscribe(() => {
     console.log('store, info update')
   })
+
+  function setSession() {
+    const sessionInfo = 'lsm'
+    sessionStorage.setItem('sessionInfo', sessionInfo)
+    userStore.setSessionInfo(sessionInfo)
+    console.log('lsm ---- get item ', sessionStorage.getItem('sessionInfo'))
+    console.log('lsm----session info', userStore.sessionInfo, userStore.getSessionInfo)
+  }
 </script>
 
 <style scoped lang="less"></style>
