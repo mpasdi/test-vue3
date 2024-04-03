@@ -51,8 +51,9 @@
     ]
 
     // 创建一个橙色的矩形
-    L.rectangle(boundsRect, { color: 'blue', weight: 1 }).addTo(map)
-    map.fitBounds(boundsRect)
+    L.rectangle(boundsRect, { color: 'blue', weight: 2, dashArray: '10, 10', fill: false }).addTo(
+      map
+    )
     map.fitBounds(bounds)
   }
 
