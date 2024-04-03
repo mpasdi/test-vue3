@@ -42,6 +42,10 @@
     <h2>symbol</h2>
     <div>symbol: {{ sbl }}</div>
     <div>symbol: {{ sbl2 }}</div>
+
+    <h2>proxy reflect</h2>
+    <div>origin obj : {{ originObj }}</div>
+    <!-- <div>proxy obj : {{ proxyObj }}</div> -->
   </div>
 </template>
 
@@ -241,6 +245,27 @@
   console.log('lsm---- reflect own key', Reflect.ownKeys(sbl_obj))
   console.log('lsm-----sbl sbl2 ', sbl, sbl2)
   console.log('lsm------sbl_obj', sbl_obj)
+  console.groupEnd()
+
+  // proxy reflect
+  console.group('lsm---- proxy reflect')
+  const originObj = {
+    name: 'lsm',
+    age: 25
+  }
+  const proxyObj = new Proxy(originObj, {
+    // get(target, attr) {
+    //   console.log('lsm---- proxy get', target[attr], attr)
+    //   return target[attr]
+    // },
+    // set() {
+    //   console.log('lsm---- proxy set')
+    //   return true
+    // }
+  })
+  proxyObj.name = 'other people'
+  console.log('lsm-- origin obj', originObj, originObj.name)
+  console.log('lsm-- proxy obj', proxyObj)
   console.groupEnd()
 </script>
 
