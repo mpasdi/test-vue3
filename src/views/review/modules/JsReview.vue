@@ -254,14 +254,15 @@
     age: 25
   }
   const proxyObj = new Proxy(originObj, {
-    // get(target, attr) {
-    //   console.log('lsm---- proxy get', target[attr], attr)
-    //   return target[attr]
-    // },
-    // set() {
-    //   console.log('lsm---- proxy set')
-    //   return true
-    // }
+    get(target, attr) {
+      console.log('lsm---- proxy get track')
+      return target[attr]
+    },
+    set(target, attr, value) {
+      console.log('lsm---- proxy set trigger')
+      target[attr] = value
+      return true
+    }
   })
   proxyObj.name = 'other people'
   console.log('lsm-- origin obj', originObj, originObj.name)
