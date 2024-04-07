@@ -19,6 +19,9 @@
     <div class="css-grid-area">
       <div class="css-grid-area_item" v-for="item in 4" :key="item">{{ item }}</div>
     </div>
+    <div class="css-grid-template">
+      <div class="css-grid-template_item" v-for="item in 5" :key="item">{{ item }}</div>
+    </div>
 
     <h2>3. 盒模型</h2>
     <div class="standard-box">1</div>
@@ -127,6 +130,7 @@
     // justify-content: center; // 容器居中
     align-items: center;
     align-content: center;
+
     &_item {
       // width: 30px;
       .custom-item(saddlebrown);
@@ -134,6 +138,26 @@
 
     &_item:nth-child(1) {
       grid-area: header;
+    }
+  }
+
+  .css-grid-template {
+    .custom-color(greenyellow);
+    display: grid;
+    gap: 10px 10px;
+    height: 200px;
+    justify-content: space-between; /* 水平方向两端对齐 */
+    align-items: center; /* 垂直方向居中对齐 */
+    grid-template-columns: repeat(4, 50px);
+    // grid-template-rows: repeat(2, 50px);
+    justify-items: center;
+    grid-auto-rows: 50px;
+    grid-auto-columns: 50px;
+    align-content: space-between;
+
+    &_item {
+      // width: 30px;
+      .custom-item(saddlebrown);
     }
   }
 
