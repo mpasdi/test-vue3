@@ -260,13 +260,60 @@
     },
     set(target, attr, value) {
       console.log('lsm---- proxy set trigger')
-      target[attr] = value
+      Reflect.set(target, attr, value)
       return true
+    },
+    has(target, p) {
+      return Reflect.has(target, p)
+    },
+    deleteProperty(target, p) {
+      return Reflect.deleteProperty(target, p)
+    },
+    defineProperty(target, property, attributes) {
+      return Reflect.defineProperty(target, property, attributes)
+    },
+    getPrototypeOf(target) {
+      return Reflect.getPrototypeOf(target)
+    },
+    setPrototypeOf(target, v) {
+      return Reflect.setPrototypeOf(target, v)
+    },
+    getOwnPropertyDescriptor(target, p) {
+      return Reflect.getOwnPropertyDescriptor(target, p)
+    },
+    ownKeys(target) {
+      return Reflect.ownKeys(target)
+    },
+    preventExtensions(target) {
+      return Reflect.preventExtensions(target)
+    },
+    isExtensible(target) {
+      return Reflect.isExtensible(target)
     }
+    // 下面两个只有代理对象是函数时才有
+    // construct(target, argArray, newTarget) {
+    //   return Reflect.construct(target, argArray, newTarget)
+    // }
+    // apply(target, thisArg, argArray) {
+    //   return Reflect.apply(target, thisArg, argArray)
+    // },
   })
   proxyObj.name = 'other people'
   console.log('lsm-- origin obj', originObj, originObj.name)
   console.log('lsm-- proxy obj', proxyObj)
+  const revokeProxyObj = Proxy.revocable(originObj, {
+    get(target, attr) {
+      return Reflect.get(target, attr)
+    }
+  })
+  console.log('lsm------revokeProxyObj attr', revokeProxyObj.proxy.name)
+  revokeProxyObj.revoke()
+  try {
+    console.log('lsm------revokeProxyObj after attr', revokeProxyObj.proxy.name)
+  } catch (error) {
+    console.log('lsm-----error', error)
+  }
+
   console.groupEnd()
 </script>
 
