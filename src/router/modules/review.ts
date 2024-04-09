@@ -1,5 +1,11 @@
 /*
  * @Author: lisongming
+ * @Date: 2024-02-27 09:38:37
+ * @LastEditors: lisongming
+ * @Description: 描述
+ */
+/*
+ * @Author: lisongming
  * @Date: 2024-01-15 13:12:49
  * @LastEditors: lisongming
  * @Description: 描述
@@ -54,6 +60,14 @@ export const Review: RouteRecordRaw[] = [
         component: () => import('@/views/review/modules/PromiseReview.vue'),
         meta: {
           title: 'promise复习'
+        }
+      },
+      {
+        path: 'topicReview',
+        name: '/TopicReview',
+        component: () => import('@/views/review/modules/TopicReview.vue'),
+        meta: {
+          title: '小知识点复习'
         }
       }
     ]

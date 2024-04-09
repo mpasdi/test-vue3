@@ -22,7 +22,7 @@ app.use(router)
 // 注册ui组件
 app.use(registerUiComponents)
 
-// 注册自定义组件
+// 注册自定义指令
 app.use(registerDirective)
 
 app.mount('#app')

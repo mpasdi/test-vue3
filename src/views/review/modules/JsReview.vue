@@ -46,6 +46,15 @@
     <h2>proxy reflect</h2>
     <div>origin obj : {{ originObj }}</div>
     <!-- <div>proxy obj : {{ proxyObj }}</div> -->
+
+    <h2>事件委托</h2>
+    <div class="event-entrust" @click="entrustEvent">
+      <div v-for="item in 4" :key="item" class="entrust-item">委托项{{ item }}</div>
+    </div>
+
+    <h2>JSON.parse JSON.stringify 的参数</h2>
+    <div>parse: {{ stringifyObj }}</div>
+    <div>stringify: {{ parseStr }}</div>
   </div>
 </template>
 
@@ -315,10 +324,56 @@
   }
 
   console.groupEnd()
+
+  // 事件委托
+  console.group('事件委托')
+  function entrustEvent(event) {
+    console.log('lsm----event', event, event.target)
+    event.target.innerText += ' 我被点击了'
+  }
+
+  // json.parse json.stringify
+  const jsonObj = {
+    name: 'lsm',
+    age: 27,
+    address: '黄鹤楼'
+  }
+
+  // const stringifyObj = JSON.stringify(jsonObj, (key, value) => {
+  //   if (key === 'age' || key === 'name') {
+  //     return undefined
+  //   } else {
+  //     return value
+  //   }
+  // })
+
+  const stringifyObj = JSON.stringify(jsonObj, ['address', 'name'], 31)
+  console.log('lsm----stringifyObj', stringifyObj)
+  const parseStr = JSON.parse(stringifyObj, (key, value) => {
+    if (key === 'name') {
+      return value.toUpperCase()
+    }
+    return value
+  })
+  console.log('lsm----parseStr', parseStr)
+
+  console.groupEnd()
 </script>
 
 <style scoped lang="less">
   img {
     width: 300px;
+  }
+
+  .event-entrust {
+    .entrust-item {
+      height: 40px;
+      background: orange;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
   }
 </style>
