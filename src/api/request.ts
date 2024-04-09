@@ -9,7 +9,7 @@ import { ContentTypeEnum } from '@/utils/enums'
 
 const request = axios.create({
   // baseURL: '/api',
-  baseURL: 'http://localhost:9332',
+  baseURL: import.meta.env.VITE_APP_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': ContentTypeEnum.JSON

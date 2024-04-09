@@ -21,12 +21,18 @@
 
     <h2>getUserById</h2>
     <div>{{ singleUser }}</div>
+
+    <h2>jsonp test</h2>
+    <div>
+      <a-button @click="jsonpTestFunc">jsonp 测试</a-button>
+      <div>{{ jsonpData }}</div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref, onBeforeMount } from 'vue'
-  import { getUserById, getUserList } from '@/api/expressApi'
+  import { getUserById, getUserList, jsonpTest } from '@/api/expressApi'
   import { javaGetUserList } from '@/api/javaApi'
 
   // vue api
@@ -39,6 +45,7 @@
   const userList = ref<Array<any>>([])
   const javaUserList = ref<Array<any>>([])
   const singleUser = ref<any>({})
+  const jsonpData = ref()
 
   async function queryUserList() {
     const res = await getUserList()
@@ -56,6 +63,14 @@
     const res = await getUserById(params)
     console.log('lsm----res single', res)
     singleUser.value = res
+  }
+
+  async function jsonpTestFunc() {
+    const params = {
+      id: 1
+    }
+    const res = await jsonpTest(params, 'jsonpFunc')
+    jsonpData.value = res
   }
 </script>
 

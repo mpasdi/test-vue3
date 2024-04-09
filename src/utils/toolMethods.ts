@@ -237,6 +237,31 @@ function customInstanceof(value: any, constructor: any) {
   }
   return false
 }
+
+// jsonp 发送请求， 只支持get
+function jsonp(url: string, params: { [key: string]: any }, callback: string) {
+  return new Promise((resolve) => {
+    const script = document.createElement('script')
+
+    // 在这里定义，当后端返回函数调用之后，执行函数体
+    window[callback] = (data) => {
+      resolve(data)
+    }
+
+    params = { ...params, callback }
+    url += `?${Object.entries(params)
+      .map((item) => `${item[0]}=${item[1]}`)
+      .join('&')}`
+
+    script.setAttribute('async', 'true')
+    script.setAttribute('src', url)
+
+    document.body.appendChild(script)
+    script.addEventListener('load', () => {
+      document.body.removeChild(script)
+    })
+  })
+}
 export {
   throttle,
   debounce,
@@ -246,5 +271,6 @@ export {
   tableExport,
   textCopy,
   bigFileUpload,
-  customInstanceof
+  customInstanceof,
+  jsonp
 }
