@@ -55,11 +55,16 @@
     <h2>JSON.parse JSON.stringify 的参数</h2>
     <div>parse: {{ stringifyObj }}</div>
     <div>stringify: {{ parseStr }}</div>
+
+    <h2>类和继承</h2>
+    <div>friend: {{ friend }}</div>
+    <div>girl friend: {{ girlFriend }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
   import { computed, ref, onMounted, onUnmounted } from 'vue'
+  import { Friend, GirlFriend } from '../tss/class'
 
   // vue api
   onMounted(() => {
@@ -358,6 +363,12 @@
   console.log('lsm----parseStr', parseStr)
 
   console.groupEnd()
+
+  // 类和继承
+  const girlFriend = new GirlFriend({ userName: 'alis', age: 25 })
+  const friend = new Friend({ userName: 'lsm', age: 27, gender: '男' })
+  girlFriend.merry(friend)
+  console.log('lsm----girlFriend', girlFriend)
 </script>
 
 <style scoped lang="less">
