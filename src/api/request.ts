@@ -6,6 +6,7 @@
  */
 import axios from 'axios'
 import { ContentTypeEnum } from '@/utils/enums'
+// import type { RawAxiosResponseHeaders } from 'axios'
 
 const request = axios.create({
   // baseURL: '/api',
@@ -16,11 +17,17 @@ const request = axios.create({
   }
 })
 
+// let lastResponseHeader = {} as RawAxiosResponseHeaders
+
 request.interceptors.request.use((config) => {
+  // console.log('lsm---config', config)
+  // config.headers['If-None-Match'] = lastResponseHeader.etag // 走协商缓存
   return config
 })
 
 request.interceptors.response.use((resp): any => {
+  // console.log('lsm---- -resp', resp.headers)
+  // lastResponseHeader = resp.headers
   if (resp.status === 200) {
     return resp.data
   }

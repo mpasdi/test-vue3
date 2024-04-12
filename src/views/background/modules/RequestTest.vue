@@ -17,7 +17,7 @@
     </div>
 
     <h2>express static 静态代理测试</h2>
-    <img width="200" src="http://localhost:9332/images/lover.jpg" alt="express.static" />
+    <img alt="express.static" src="http://localhost:9332/images/lover.jpg" width="200" />
 
     <h2>getUserById</h2>
     <div>{{ singleUser }}</div>
@@ -27,12 +27,36 @@
       <a-button @click="jsonpTestFunc">jsonp 测试</a-button>
       <div>{{ jsonpData }}</div>
     </div>
+
+    <h2>响应压缩测试</h2>
+    <div>
+      <a-button type="primary" @click="responseCompression">响应压缩测试</a-button>
+      &nbsp;
+      <a-button type="primary" @click="compressionInfo = ''">清除数据</a-button>
+
+      <div>{{ compressionInfo }}</div>
+    </div>
+
+    <h2>缓存测试</h2>
+    <div>
+      <a-button type="primary" @click="postCacheTest">缓存测试</a-button>
+      &nbsp;
+      <a-button type="primary" @click="cacheInfo = ''">清除数据</a-button>
+
+      <div>{{ cacheInfo }}</div>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
   import { ref, onBeforeMount } from 'vue'
-  import { getUserById, getUserList, jsonpTest } from '@/api/expressApi'
+  import {
+    getUserById,
+    getUserList,
+    jsonpTest,
+    getInfoByCompression,
+    cacheTest
+  } from '@/api/expressApi'
   import { javaGetUserList } from '@/api/javaApi'
 
   // vue api
@@ -65,6 +89,7 @@
     singleUser.value = res
   }
 
+  // jsonp
   async function jsonpTestFunc() {
     const params = {
       id: 1
@@ -72,6 +97,22 @@
     const res = await jsonpTest(params, 'jsonpFunc')
     jsonpData.value = res
   }
+
+  // 响应压缩测试
+  const compressionInfo = ref()
+
+  async function responseCompression() {
+    const res = await getInfoByCompression()
+    compressionInfo.value = res
+    console.log('lsm-----res', res)
+  }
+
+  // 缓存测试
+  const cacheInfo = ref()
+  async function postCacheTest() {
+    const res = await cacheTest()
+    cacheInfo.value = res
+  }
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>
