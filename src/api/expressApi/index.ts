@@ -43,7 +43,7 @@ function getInfoByCompression() {
 
 // 缓存测试
 function cacheTest() {
-  return request.post(API_NAME.CACHE_TEST, {}, {
+  return request.get(API_NAME.CACHE_TEST, {
     headers: {
       'Cache-Control': 'public'
     }

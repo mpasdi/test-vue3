@@ -22,6 +22,9 @@ const request = axios.create({
 request.interceptors.request.use((config) => {
   // console.log('lsm---config', config)
   // config.headers['If-None-Match'] = lastResponseHeader.etag // 走协商缓存
+  // config.headers['If-None-Match'] = '2121' // 走协商缓存
+  // config.headers['If-Modified-Since'] = lastResponseHeader['last-modified'] // 走协商缓存
+
   return config
 })
 
