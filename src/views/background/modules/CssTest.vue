@@ -23,6 +23,16 @@
     <h2>盒模型测试</h2>
     <div class="box-type"></div>
     <div class="box-type1"></div>
+
+    <h2>文字换行</h2>
+    <div class="text-wrap">
+      lsm is a self disciplined man , he like learn and he is ambitious ,one day, he will succeed,
+      he firmly believe that
+    </div>
+    <div class="text-wrap">
+      关山难越， 谁悲失路之人； 萍水相逢， 尽是他乡之客。怀帝阍而不见， 奉宣室以何年。 北海虽赊，
+      扶摇可接，东隅已逝，桑榆非晚
+    </div>
   </div>
 </template>
 
@@ -81,5 +91,27 @@
   }
   .box-type1 {
     .base-box(orange);
+  }
+
+  .base-test-wrap(@color) {
+    width: 200px;
+    height: 50px;
+    border: 1px solid @color;
+    margin: 10px;
+  }
+
+  .text-wrap {
+    .base-test-wrap(red);
+    //overflow: hidden;
+    //text-overflow: ellipsis;
+    //word-break: break-word; //break-word break-all
+    //white-space: break-spaces; //pre-wrap nowrap break-spaces
+    //overflow-wrap: anywhere; //break-word
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* 显示的行数 */
+    -webkit-box-orient: vertical;
   }
 </style>
