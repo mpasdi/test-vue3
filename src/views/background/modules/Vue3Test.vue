@@ -49,6 +49,11 @@
     <button @click="setSession">设置session info</button>
     <div>sessionInfo :{{ userStore.sessionInfo }}</div>
     <div>getSessionInfo :{{ userStore.getSessionInfo }}</div>
+
+    <h2>watch測試</h2>
+    <div>
+      <a-button @click="updateWatchObj">addVal(监听的新旧值（对象）都是一样的)</a-button>
+    </div>
   </div>
 </template>
 
@@ -67,7 +72,8 @@
     toRaw,
     unref,
     provide,
-    readonly
+    readonly,
+    reactive
   } from 'vue'
   import SubComponentOne from '@/components/subComponentsTest/SubComponentOne.vue'
   import { useUser } from '@/stores/modules/user'
@@ -162,6 +168,19 @@
     console.log('lsm ---- get item ', sessionStorage.getItem('sessionInfo'))
     console.log('lsm----session info', userStore.sessionInfo, userStore.getSessionInfo)
   }
+
+  // watch
+  const watchObj = reactive({ age: 1, size: 18 })
+  function updateWatchObj() {
+    watchObj.age++
+    watchObj.size++
+  }
+  watch(
+    () => [watchObj.age, watchObj.size],
+    (newVal, oldVal) => {
+      console.log('lsm----watch', newVal, oldVal)
+    }
+  )
 </script>
 
 <style scoped lang="less"></style>
