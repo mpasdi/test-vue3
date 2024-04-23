@@ -45,6 +45,15 @@
 
       <div>{{ cacheInfo }}</div>
     </div>
+
+    <h2>api 代理标识测试</h2>
+    <div>
+      <a-button type="primary" @click="getSingleUserInfo">api 代理标识测试</a-button>
+      &nbsp;
+      <a-button type="primary" @click="singleUserInfo = ''">清除数据</a-button>
+
+      <div>{{ singleUserInfo }}</div>
+    </div>
   </div>
 </template>
 
@@ -55,7 +64,8 @@
     getUserList,
     jsonpTest,
     getInfoByCompression,
-    cacheTest
+    cacheTest,
+    getApiSingleUser
   } from '@/api/expressApi'
   import { javaGetUserList } from '@/api/javaApi'
 
@@ -112,6 +122,13 @@
   async function postCacheTest() {
     const res = await cacheTest()
     cacheInfo.value = res
+  }
+
+  // api 代理标识测试
+  const singleUserInfo = ref()
+  async function getSingleUserInfo() {
+    const res = await getApiSingleUser()
+    singleUserInfo.value = res
   }
 </script>
 

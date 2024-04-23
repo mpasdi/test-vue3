@@ -11,6 +11,7 @@ import type { AxiosRequestConfig } from 'axios'
 
 enum API_NAME {
   GET_USER_LIST = '/getUserList',
+  GET_SINGLE_USER = '/apiGetSingleUser',
   GET_USER_BY_ID = '/getUserListById',
   JSONP_TEST = '/jsonpTest',
   GET_INFO_BY_COMPRESSION = '/getInfoByCompression',
@@ -50,4 +51,10 @@ function cacheTest() {
   } as AxiosRequestConfig)
 }
 
-export { getUserList, getUserById, jsonpTest, getInfoByCompression, cacheTest }
+function getApiSingleUser() {
+  return request.get(API_NAME.GET_SINGLE_USER, {
+    // baseURL: 'http://localhost:9332'
+  })
+}
+
+export { getUserList, getUserById, jsonpTest, getInfoByCompression, cacheTest, getApiSingleUser }

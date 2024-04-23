@@ -29,7 +29,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8333',
+        target: 'http://localhost:9332',
         changeOrigin: true,
         rewrite: (path) => path.replace('/api', '')
       }

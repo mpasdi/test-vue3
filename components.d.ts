@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AButton: typeof import('ant-design-vue/es')['Button']
+    ATable: (typeof import('ant-design-vue/es'))['Table']
+    ATag: typeof import('ant-design-vue/es')['Tag']
     EchartRadar: typeof import('./src/components/echarts/EchartRadar.vue')['default']
     EchartsBar: typeof import('./src/components/echarts/EchartsBar.vue')['default']
     EchartsBing: typeof import('./src/components/echarts/EchartsBing.vue')['default']
