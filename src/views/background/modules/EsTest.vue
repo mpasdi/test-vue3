@@ -265,9 +265,20 @@
   const sblTest3 = Symbol.for('sbl-test1')
   // console.log('lsm-----sbl equal', sblTest1 === sblTest3)
   console.log('lsm----sbl key for', Symbol.keyFor(sblTest3), sblTest)
+  const sblObjKey = {
+    [sblTest1]: 'name',
+    general: 'name test'
+  }
+  console.log(
+    'lsm---- sblObjKey',
+    sblObjKey[sblTest1],
+    Object.keys(sblObjKey),
+    Object.getOwnPropertySymbols(sblObjKey),
+    Reflect.ownKeys(sblObjKey)
+  )
 
   // es 11 2020
-  const unValue = undefined
+  let unValue: Array<any> | undefined
   const unVal = unValue?.map((item) => item)
   const dynamicImportImg = ref('')
   async function getUrl() {
