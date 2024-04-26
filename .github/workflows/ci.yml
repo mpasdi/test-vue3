@@ -41,7 +41,7 @@ jobs:
 
             # 3 安装 pnpm
       - name: set npm registry  (设置node仓库)
-        run: npm set confing registry https://registry.npmmirror.com
+        run: npm set config registry https://registry.npmmirror.com
 
       # 3 安装 pnpm
       # - name: Install pnpm (安装 pnpm)
