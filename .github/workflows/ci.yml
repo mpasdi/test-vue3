@@ -68,10 +68,10 @@ jobs:
     steps:
       # 1 将代码仓库的内容拉取（或称为检出）到工作目录中，以便在下面的工作流程中使用
       - name: Checkout code (检出代码)
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # 2 安装 node 环境，并设置版本为 16
       - name: Setup Node.js (设置 node 版本)
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
       # 4 安装依赖
