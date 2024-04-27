@@ -135,7 +135,7 @@
   provide('numVal', readonly(num))
 
   // toRaw toRef
-  const generalVal = 1
+  let generalVal = 1
   const refVal = ref(1)
   const toRefVal = toRef(generalVal)
   const toRawVal = toRaw(refVal)
