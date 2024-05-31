@@ -54,6 +54,15 @@
 
       <div>{{ singleUserInfo }}</div>
     </div>
+
+    <h2>kml文件跨域测试</h2>
+    <div>
+      <a-button type="primary" @click="getKmlFileInfo">kml文件跨域测试</a-button>
+      &nbsp;
+      <a-button type="primary" @click="kmlData = ''">清除数据</a-button>
+
+      <div>{{ kmlData }}</div>
+    </div>
   </div>
 </template>
 
@@ -68,6 +77,7 @@
     getApiSingleUser
   } from '@/api/expressApi'
   import { javaGetUserList } from '@/api/javaApi'
+  import { getKmlData } from '@/api/getApi/imagesApi'
 
   // vue api
   onBeforeMount(() => {
@@ -129,6 +139,14 @@
   async function getSingleUserInfo() {
     const res = await getApiSingleUser()
     singleUserInfo.value = res
+  }
+
+  // kml文件跨域测试
+  const kmlData = ref()
+  async function getKmlFileInfo() {
+    const res = await getKmlData()
+    console.log('lsm----res', res)
+    kmlData.value = res
   }
 </script>
 
